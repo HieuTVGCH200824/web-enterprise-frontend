@@ -4,7 +4,7 @@
 import Input from '../../components/Input.svelte';
 </script>
 <div class="flex items-center justify-center h-full">
-    <div class="flex md:justify-around max-md:h-full max-md:items-center w-full max-md:flex-col max-md:pt-10">
+    <div class="animate-[pulse_2s_ease-in-out] flex justify-center md:space-x-32 max-md:h-full items-center w-full max-md:flex-col max-md:pt-10">
         <img class="h-[600px] max-md:h-48" src="login.png" alt="">
         <div class="min-w-fit bg-card-indigo w-1/4 shadow-2xl shadow-black rounded-3xl flex flex-col items-center">
             <div class="py-8 px-14 flex flex-col space-y-10 items-center">
@@ -18,8 +18,8 @@ import Input from '../../components/Input.svelte';
                     </div>
                     <div class="self-center flex flex-col items-center space-y-2">
                         <Button>Login</Button>
-                        <a href="" class="text-white">Forgot password?</a>
-                        <a href="" class="text-white">Don't have account? Register now!</a>
+                        <a href="/login" class="text-white">Forgot password?</a>
+                        <a href="/register" class="text-white">Don't have account? Register now!</a>
                     </div>
                 </form>
             </div>
