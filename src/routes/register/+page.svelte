@@ -1,6 +1,6 @@
 <script>
 	import Input from "../../components/Input.svelte";
-    import Button from "../../components/Button.svelte";
+    import Button from "../../components/Button/Button.svelte";
 
 </script>
 <div class="flex items-center fixed w-full h-full justify-center bg-background-indigo">

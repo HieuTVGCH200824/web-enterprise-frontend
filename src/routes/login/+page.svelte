@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Button from '../../components/Button.svelte';
+	import Button from '../../components/Button/Button.svelte';
     import Checkbox from '../../components/Checkbox.svelte';
 import Input from '../../components/Input.svelte';
 </script>
 <div class="flex items-center justify-center h-full w-full fixed bg-background-indigo">
     <div class="flex justify-center lg:space-x-40 max-lg:h-full items-center w-full max-lg:flex-col ">
-        <img class="h-[600px] min-w-fit max-lg:h-48" src="login.png" alt="">
+        <img class="animate-[bounce_1500ms_ease-in-out] h-[600px] min-w-fit max-lg:h-48" src="login.png" alt="">
         <div class="min-w-fit bg-card-indigo w-1/4 shadow-2xl shadow-black rounded-3xl flex flex-col items-center">
             <div class="py-8 px-14 flex flex-col space-y-10 items-center">
                 <p class="text-white text-6xl font-mono">Login</p>
