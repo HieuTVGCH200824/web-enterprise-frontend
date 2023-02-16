@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '../../components/Button/Button.svelte';
     import Checkbox from '../../components/Checkbox.svelte';
-import Input from '../../components/Input.svelte';
+    import Input from '../../components/Input.svelte';
 </script>
 <div class="flex items-center justify-center h-full w-full fixed bg-background-indigo">
     <div class="flex justify-center lg:space-x-40 max-lg:h-full items-center w-full max-lg:flex-col ">
