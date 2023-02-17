@@ -2,19 +2,17 @@
 	import Input from "../../components/Input.svelte";
     import Button from  "../../components/Button/Button.svelte";
     import { enhance } from '$app/forms';
+    import Errors from '$lib/Error.svelte';
 
 	/** @type {import('./$types').ActionData} */
-	export let form;
+	export let form :any;
 
-   
-    
-
-    function handleSubmit(e){
-		const formData = new FormData(e.target)
-        e.preventDefault()
-		let json = Object.fromEntries(formData.entries())
-        console.log(json)
-    }
+    // function handleSubmit(e){
+	// 	const formData = new FormData(e.target)
+    //     e.preventDefault()
+	// 	let json = Object.fromEntries(formData.entries())
+    //     console.log(json)
+    // }
 
 </script>
 <div class="flex items-center fixed w-full h-full justify-center bg-background-indigo">
@@ -27,6 +25,7 @@
                     <Input value="" name="last_name" id="last_name" label="" type="text" placeholder="Last Name"></Input>
                     <Input value="" name="mobile" id="mobile" label="" type="text" placeholder="Phone No."></Input>
                 </div>
+                <Errors errors={form?.errors} />
                 <div class="flex flex-col h-full space-y-10">
                     <Input value="" name="password" id="password" label="" type="password" placeholder="Password"></Input>
                     <Input value="" name="confirm" id="confirm_password" label="" type="password" placeholder="Confirm Password"></Input>
@@ -37,16 +36,6 @@
                 <Button>Register</Button>
                 <a href="/login" class="text-white">Already have an account? Login</a>
             </div>
-            <!-- <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-          
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-          
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-          
-            <button type="submit">Submit</button> -->
         </form>
     </div>
 </div>
