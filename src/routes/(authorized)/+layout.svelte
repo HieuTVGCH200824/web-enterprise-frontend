@@ -9,7 +9,7 @@
         <Sidebar />
         <div class="w-full p-0 h-full flex flex-col">
             <Searchbar state={userBar}/>
-            <div class="overflow-y-scroll">
+            <div class="overflow-y-scroll bg-background-indigo text-white pt-10">
                 <slot/>
             </div>
         </div>

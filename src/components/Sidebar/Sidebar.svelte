@@ -3,7 +3,7 @@
     let state: boolean = true;
 import Nav from "./Nav.svelte";
 </script>
-<div class="text-white font-sans h-screen w-20 sticky z-20 hover:w-48 ease-out group duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
+<div class="text-white font-sans h-screen w-20 sticky z-20 hover:w-60 ease-out group duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
     <div class="border-b-2 border-white/10 py-3 flex items-center justify-center md:group-hover:space-x-8 md:rounded-tl-xl">
         <p class="font-bold hidden group-hover:block">Explore</p>
         <SidebarButton on:event={()=>{state=!state}}></SidebarButton>
