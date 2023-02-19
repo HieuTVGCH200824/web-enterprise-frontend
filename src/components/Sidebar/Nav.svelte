@@ -1,13 +1,12 @@
 <script lang="ts">
-
-
+    export let barState : boolean = false;
     export let content:string;
 </script>
 
 <div class="w-full">
-    <a href="/" class="p-4 flex rounded items-center justify-center group-hover:justify-start hover:text-violet-400 group-hover:ml-5 space-x-5 text-sm h-10 hover:bg-black/50">
+    <a href="/" class="{barState?" justify-start ml-5":"justify-center"} p-4 flex rounded items-center hover:text-violet-400 space-x-5 text-sm h-10 hover:bg-black/50">
         <slot/>
-        <p class="hidden group-hover:block">
+        <p class="{barState?" block" : " hidden"}">
             {content}
         </p>
     </a>

@@ -13,10 +13,8 @@ export const actions = {
 		console.log(data);
 
 		const body = await api.post('users/login', {
-			
 				username: data.get('email'),
 				password: data.get('password')
-			
 		});
 
 		if (body.errors) {
@@ -25,6 +23,7 @@ export const actions = {
 
 		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
+		console.log(cookies);
 
 		throw redirect(307, '/');
 	}
