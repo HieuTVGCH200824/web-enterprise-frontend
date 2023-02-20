@@ -7,13 +7,6 @@
 	/** @type {import('./$types').ActionData} */
 	export let form :any;
 
-    // function handleSubmit(e){
-	// 	const formData = new FormData(e.target)
-    //     e.preventDefault()
-	// 	let json = Object.fromEntries(formData.entries())
-    //     console.log(json)
-    // }
-
 </script>
 <div class="flex items-center fixed w-full h-full justify-center bg-background-indigo">
     <div class="rounded-3xl shadow-2xl shadow-black bg-card-indigo flex flex-col justify-center items-center py-8 px-14 space-y-10">

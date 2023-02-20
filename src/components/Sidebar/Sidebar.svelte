@@ -3,12 +3,12 @@
     let state: boolean = false;
 import Nav from "./Nav.svelte";
 </script>
-<div class="{state?"w-60 min-w-fit max-sm:w-full max-sm:absolute max-sm:bg-opacity-100 z-50":"min-w-[5rem] w-20 z-0"} text-white font-sans h-screen sticky ease-in-out duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl max-sm:">
-    <div class="{state?"space-x-8":""} border-b-2 border-white/10 py-3 flex items-center justify-center md:rounded-tl-xl">
+<div class="{state?"w-60 max-sm:w-full max-sm:absolute max-sm:bg-opacity-100 z-50":"min-w-[5rem] w-20 z-0 fixed max-sm:h-16 max-sm:bottom-0 max-sm:w-full"} max-sm:bg-card-indigo text-white font-sans h-screen sm:sticky ease-in-out duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
+    <div class="{state?"space-x-8":""} max-sm:hidden border-b-2 border-white/10 py-3 flex items-center justify-center md:rounded-tl-xl">
         <p class="{state?"block":"hidden"} font-bold">Explore</p>
         <SidebarButton bind:barState={state}></SidebarButton>
     </div>
-    <div class="pt-2 space-y-3 w-full h-full">
+    <div class="flex flex-col max-sm:flex-row max-sm:items-center sm:pt-2 sm:space-y-3 w-full h-full">
         <Nav bind:barState={state} content="Home"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
         </svg>

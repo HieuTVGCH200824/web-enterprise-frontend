@@ -15,9 +15,7 @@ export const actions = {
 			department_id: 'aaa-bb-cc'
 		});
 		const message =  await body.json();
-		console.log(message);
 		if (body.error) {
-			console.log(body.error)
 			return fail(401, body);
 		}
 
