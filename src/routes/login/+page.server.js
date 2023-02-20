@@ -29,7 +29,7 @@ export const actions = {
 			secure: true,
 			sameSite: 'strict',
 			maxAge: 60 * 60 * 24 // 1 day
-		  });
+		});
 
 
 		throw redirect(307, '/');

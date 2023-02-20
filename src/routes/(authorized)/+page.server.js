@@ -1,6 +1,6 @@
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async ({ cookies, locals }) => {
+	logout: async ({ cookies, locals }) => {
 		cookies.delete('jwt', { path: '/' });
 		locals.user = null;
 	}
