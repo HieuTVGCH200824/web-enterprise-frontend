@@ -14,7 +14,6 @@ export const actions = {
 			image: 'text.png',
 			department_id: 'aaa-bb-cc'
 		});
-		const message =  await body.json();
 		if (body.error) {
 			return fail(401, body);
 		}

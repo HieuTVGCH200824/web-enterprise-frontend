@@ -15,10 +15,9 @@ async function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 	const res = await fetch(`${base}/${path}`, opts);
-	const message = await res.json();
+	const body = await res.json();
 	if (res.status === 200) {
-		
-		return message;
+		return body;
 	}
 
 	throw error(res.status);

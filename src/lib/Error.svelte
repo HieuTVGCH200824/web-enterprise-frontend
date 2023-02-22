@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let errors:any;
+	export let errors: any;
 </script>
 
 {#if errors}

@@ -5,11 +5,11 @@
     let userBar : boolean =false;
 </script>
 <div class="from-violet-200 to-violet-800 bg-gradient-to-tr h-full w-full fixed flex items-center justify-center">
-    <div class="w-[97%] h-full sm:mt-12 max-sm:w-full max-sm:h-full sm:rounded-xl flex bg-card-indigo bg-opacity-50 relative">
+    <div class="w-[97%] h-full sm:mt-12 max-md:w-full max-md:h-full sm:rounded-xl flex bg-card-indigo bg-opacity-50 relative">
         <Sidebar />
         <div class="w-full p-0 h-full flex flex-col">
             <Searchbar state={userBar}/>
-            <div class="overflow-y-scroll bg-background-indigo h-full text-white pt-10 max-sm:mb-16">
+            <div class="overflow-y-scroll bg-background-indigo h-full text-white pt-10 max-md:mb-16">
                 <slot/>
             </div>
         </div>

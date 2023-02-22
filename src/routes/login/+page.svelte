@@ -16,7 +16,7 @@
                 <p class="text-white text-6xl font-mono">Login</p>
                 <form method="POST" use:enhance class="flex flex-col space-y-8">
                     <Input name="email" label="" value="" type="text" id="username" placeholder="Username"></Input>
-                    <Input name="password" label="" value="" type="text" id="password" placeholder="Password"></Input>
+                    <Input name="password" label="" value="" type="password" id="password" placeholder="Password"></Input>
                     <div class="flex flex-row items-center space-x-4">
                         <Checkbox label="" value="" id="rememberPwd"/>
                         <p class="text-white text-lg">Remember Password</p>
