@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '../../components/Button/Button.svelte';
+	import Button from '../../components/Button/LoginButton.svelte';
     import Checkbox from '../../components/Checkbox.svelte';
     import Input from '../../components/Input.svelte';
     import { enhance } from '$app/forms';

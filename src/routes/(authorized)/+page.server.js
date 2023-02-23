@@ -4,4 +4,5 @@ export const actions = {
 		cookies.delete('jwt', { path: '/' });
 		locals.user = null;
 	}
+	
 }
