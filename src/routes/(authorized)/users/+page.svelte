@@ -36,7 +36,7 @@ $: if(!showModal){
 {:else if modalType}
 <Modal bind:showModal>
   <div class="flex flex-col justify-center items-center py-8 px-14 space-y-10">
-    <h1 class="font-mono text-white text-6xl">Create user</h1>
+    <h1 class="font-mono text-white text-6xl text-center">Create user</h1>
     <form use:enhance method="POST" action="?/createUser" class="flex flex-col items-center space-y-10">
         <div class="flex flex-row max-md:flex-col max-md:space-y-10 md:space-x-32 items-center">      
             <div class="flex flex-col items-center h-full space-y-10">
