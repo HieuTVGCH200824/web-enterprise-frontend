@@ -16,7 +16,9 @@ async function send({ method, path, data, token }) {
 	}
 	const res = await fetch(`${base}/${path}`, opts);
 	const body = await res.json();
-	if (res.status === 200) {
+
+
+	if (res.status == 200) {
 		return body;
 	}
 

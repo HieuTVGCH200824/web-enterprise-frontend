@@ -18,7 +18,6 @@ export const actions = {
 				password: data.get('password')
 		});
 
-		console.log(body)
 
 		if (body.error) {
 			return fail(400, body);

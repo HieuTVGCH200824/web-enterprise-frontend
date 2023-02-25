@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Input from "../../components/Input.svelte";
-    import Button from  "../../components/Button/Button.svelte";
+    import LoginButton from  "../../components/Button/LoginButton.svelte";
     import { enhance } from '$app/forms';
     import Errors from '$lib/Error.svelte';
 
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="flex flex-col items-center space-y-5">
-                <Button>Register</Button>
+                <LoginButton>Register</LoginButton>
                 <a href="/login" class="text-white">Already have an account? Login</a>
             </div>
         </form>
