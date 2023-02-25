@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Sidebar from "../../components/Sidebar/Sidebar.svelte";
     import Userbar from "../../components/Userbar/Userbar.svelte";
-    import Searchbar from "../../components/Searchbar.svelte";
+    import Searchbar from "../../components/SearchBar/Searchbar.svelte";
     let userBar : boolean =false;
 </script>
 <div class="from-violet-200 to-violet-800 bg-gradient-to-tr h-full w-full fixed flex items-center justify-center">

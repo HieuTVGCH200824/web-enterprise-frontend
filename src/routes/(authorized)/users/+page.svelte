@@ -11,6 +11,7 @@ import Modal from '../../../components/Modal.svelte'
   import Errors from '$lib/Error.svelte';
   import SubmitButton from "../../../components/Button/SubmitButton.svelte";
 	import Select from "../../../components/Select.svelte";
+  import Search from "../../../components/SearchBar/Search.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -30,6 +31,23 @@ $: if(form?.success){
   form=null;
 }
 
+let search : string= "";
+let users  = data.users;
+
+$: if(search){
+    users = data.users.filter(obj => {
+  return Object.values(obj).some(value => {
+    if (typeof value === 'string') {
+      return value.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+    }
+    return false;
+  });
+});
+}else{
+    users = data.users;
+}
+
+
 
 
 
@@ -40,12 +58,12 @@ const roles=[{"name":"Admin"},{"name":"User"}]
 
 </script>
 
-{#if !data.users}
+{#if !users}
   <h1>There are no registered users</h1>
 {:else if modalType}
 <Modal bind:showModal>
   <div class="flex flex-col justify-center items-center py-8 px-14 space-y-10">
-    <h1 class="font-mono text-white text-6xl text-center justify-center">Create</h1>
+    <h1 class="font-mono text-white text-6xl text-center justify-center">{modalType=="edit"?"Edit User":"Create User"}</h1>
     <form  use:enhance method="POST" action="{modalType=="edit"?`?/editUser`:`?/createUser`}" class="flex flex-col justify-center items-center space-y-10">
         <div class="flex justify-center items-center">      
           {#if modalType=="edit"}
@@ -75,7 +93,10 @@ const roles=[{"name":"Admin"},{"name":"User"}]
   </div>
 </Modal>
 {/if}
-<div class="py-10 mb-24 min-w-fit bg-card-indigo h-fit flex justify-center w-full flex-col items-center">
+<div class="space-y-10 py-10 mb-24 min-w-fit bg-card-indigo h-fit flex justify-center w-full flex-col items-center">
+  <div class="w-[40%]">
+    <Search bind:value={search}></Search>
+  </div>
   <CreateButton on:event={()=>{showModal=!showModal; form=null; modalType="create"}}>Create User</CreateButton>
   <div class="flow-root">
     <div class="-my-2 mx-6lg:-mx-24">
@@ -92,7 +113,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            {#each data.users as user}
+            {#each users as user}
             <tr>
               <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{user.first_name} {user.last_name} {user.username}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
