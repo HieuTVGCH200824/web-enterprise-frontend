@@ -20,7 +20,7 @@
 >
 	<div on:click|stopPropagation class="space-y-5">
 		<div class="flex justify-end">
-			<DeleteButton  on:event={() => dialog.close()}>
+			<DeleteButton on:event={() => dialog.close()}>
 			</DeleteButton>
 		</div>
 		<div>
