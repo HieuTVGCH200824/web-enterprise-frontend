@@ -22,7 +22,9 @@
                         <p class="text-white text-lg">Remember Password</p>
                     </div>
                     <div class="self-center flex flex-col items-center space-y-2">
-                        <Button>Login</Button>
+                        <div class="w-32">
+                            <Button>Login</Button>
+                        </div>
                         <a href="/login" class="text-white">Forgot password?</a>
                         <a href="/register" class="text-white text-center">Don't have account? Register now!</a>
                     </div>

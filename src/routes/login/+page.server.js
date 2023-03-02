@@ -23,7 +23,8 @@ export const actions = {
 			return fail(400, body);
 		}
 
-		const value = JSON.stringify(body.user);
+		const value = btoa(JSON.stringify(body.user));
+		
 		cookies.set('jwt', value, {
 			httpOnly: true,
 			path: '/',

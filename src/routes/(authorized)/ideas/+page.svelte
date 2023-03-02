@@ -31,12 +31,14 @@ $: if (search) {
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
             {#each ideas as idea}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
-                <IdeaCard idea={idea}></IdeaCard>
-                <div class="self-start pl-5 pt-4">
-                    <EditButton></EditButton>
-                    <DeleteButton></DeleteButton>
+                    <a href="/ideas/{idea._id}" class="h-full w-full">
+                    <IdeaCard idea={idea}></IdeaCard>
+                </a>
+                    <div class="self-start pl-5 pt-4">
+                        <EditButton></EditButton>
+                        <DeleteButton></DeleteButton>
+                    </div>
                 </div>
-            </div>
             {/each}
         </div>
     </div>

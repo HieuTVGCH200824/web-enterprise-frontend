@@ -54,13 +54,18 @@ $: if(search){
             <input type="hidden" name="id" value={form?.category.data._id}>
             {/if}
             <div class="flex flex-row space-x-8 justify-center items-center">
-                <LoginButton formaction={modalType=="edit"?"?/editCategory":"?/createCategory"}>
-                    {modalType=="edit"?"Edit":"Create"}
-                </LoginButton>
+                <div class="w-32">
+                    <LoginButton formaction={modalType=="edit"?"?/editCategory":"?/createCategory"}>
+                        {modalType=="edit"?"Edit":"Create"}
+                    </LoginButton>
+                </div>
                 {#if modalType=="edit"}
+                <div class="w-32">
+
                 <LoginButton formaction="?/deleteCategory">
                     {modalType=="edit"?"Delete":""}
                 </LoginButton>
+                </div>
                 {/if}
             </div>
         </form>
