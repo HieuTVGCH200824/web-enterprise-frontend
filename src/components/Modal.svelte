@@ -16,15 +16,14 @@
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
 	on:click|self={() => dialog.close()}
-	class="bg-card-indigo text-white w-fit"
+	class="bg-card-indigo text-white min-w-fit w-3/5"
 >
 	<div on:click|stopPropagation class="space-y-5">
 		<div class="flex justify-end">
 			<DeleteButton on:event={() => dialog.close()}>
 			</DeleteButton>
 		</div>
-		<div>
-			<slot name="header" />
+		<div class="flex justify-center items-center w-full">
 			<slot />
 		</div>
 		<!-- svelte-ignore a11y-autofocus -->

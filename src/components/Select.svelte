@@ -7,11 +7,11 @@
   export let defaultValue : string ="";
 
   let show :boolean = false;
+  $: if(defaultValue){
+    content=defaultValue;
+  }
   $: result = content;
 
-$: if(content == ""){
-  content=defaultValue;
-}
 
   export let options = new Array ;
 
