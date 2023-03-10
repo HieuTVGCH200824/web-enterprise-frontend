@@ -59,6 +59,18 @@ export const actions = {
         return{success: true}
     }
     },
+    deleteIdea: async ({ request, locals }) => {
+        const data = await request.formData();
+        const form = {
+            _id: data.get('id')
+    }
+    const res = await api.del(`ideas/${form._id}`, locals.user.token);
+    if (res.error) {
+        return fail(400, res);
+    }else{
+        return{success: true}
+    }
+    },
 }
 
 
