@@ -8,9 +8,9 @@
     import Input from '../../../components/Input.svelte';
     import Textarea from '../../../components/Textarea.svelte';
     import {enhance} from '$app/forms';
-    import LoginButton from '../../../components/Button/LoginButton.svelte';
     import Checkbox from '../../../components/Checkbox.svelte';
 	import Select from '../../../components/Select.svelte';
+	import SubmitButton from '../../../components/Button/SubmitButton.svelte';
 
 
     /** @type {import('./$types').PageData} */
@@ -85,7 +85,7 @@ $: if (search) {
                 <Checkbox label="" value="" id=""></Checkbox><p>Agree to the terms & conditions</p>
             </div>
             <div class="w-full px-2 flex justify-center">
-                <LoginButton formaction={modalType=="edit"?`?/updateIdea`:`?/createIdea`}>Post</LoginButton>
+                <SubmitButton>Post</SubmitButton>
             </div>
         </form>
     </div>

@@ -30,12 +30,12 @@ $: if(form?.success){
   form=null;
 }
 
-let categories  = data.categories;
+let departments  = data.departments;
 
 $: if(search){
-    categories = data.categories.filter((category:any) => category.name.toLowerCase().includes(search.toLowerCase()));
+    departments = data.departments.filter((department:any) => department.name.toLowerCase().includes(search.toLowerCase()));
 }else{
-    categories = data.categories;
+    departments = data.departments;
 }
 
 
@@ -46,14 +46,14 @@ $: if(search){
 <Modal bind:showModal>
     <div class=" bg-[#393D5D] h-fit flex items-center flex-col pt-5 pb-10 w-full">
     <div>
-        <h1 class="text-3xl font-semibold font-mono">{modalType=="edit"?"Edit Category":"Create Category"}</h1>
+        <h1 class="text-3xl font-semibold font-mono">{modalType=="edit"?"Edit department":"Create department"}</h1>
     </div>
     <div class=" flex flex-col items-center justify-center w-[60%] ">
-        <form action="{modalType=="edit"?`?/editCategory`:`?/createCategory`}" use:enhance method="POST" class="w-full space-y-5">
+        <form action="{modalType=="edit"?`?/editDepartment`:`?/createDepartment`}" use:enhance method="POST" class="w-full space-y-5">
             {#if modalType=="edit"}
-            <input type="hidden" value={form?.category._id} id="id" name="id"/>
+            <input type="hidden" value={form?.department._id} id="id" name="id"/>
             {/if}
-            <Input label="" type="text" value="{modalType=="edit"?`${form?.category.name}`:""}" id="name" name="name" placeholder="name"></Input>
+            <Input label="" type="text" value="{modalType=="edit"?`${form?.department.name}`:""}" id="name" name="name" placeholder="name"></Input>
             <div class="w-full px-2 flex justify-center">
                 <SubmitButton>Submit</SubmitButton>
             </div>
@@ -67,19 +67,19 @@ $: if(search){
     <div class="w-[40%]">
         <Search bind:value={search}></Search>
     </div>
-    <CreateButton on:event={()=>{showModal=true}}>Create Category</CreateButton>
+    <CreateButton on:event={()=>{showModal=true}}>Create department</CreateButton>
     <div class="md:w-[60%] w-full">
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
-            {#each categories as category}
+            {#each departments as department}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
-                    <CrudCard title={category.name}></CrudCard>
+                    <CrudCard title={department.name}></CrudCard>
                     <div class="self-start pl-5 pt-4 flex flex-row space-x-3">
-                        <form action="?/getCategory" method="POST" use:enhance>
-                            <input type="hidden" name="id" value ="{category._id}">
+                        <form action="?/getDepartment" method="POST" use:enhance>
+                            <input type="hidden" name="id" value ="{department._id}">
                             <EditButton on:event={()=>{showModal=true;modalType="edit"}}></EditButton>
                         </form>
-                        <form action="?/deleteCategory" method="POST" use:enhance>
-                            <input type="hidden" name="id" value ="{category._id}">
+                        <form action="?/deleteDepartment" method="POST" use:enhance>
+                            <input type="hidden" name="id" value ="{department._id}">
                             <DeleteButton></DeleteButton>
                         </form>
                     </div>
