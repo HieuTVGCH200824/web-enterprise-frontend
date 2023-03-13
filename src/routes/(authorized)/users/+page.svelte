@@ -52,7 +52,10 @@ $: if(search){
 
 
 
-const deparments=[{"name":"Department 1"},{"name":"Department 2"},{"name":"Department 3"}]
+let departments=data.departments
+$:if(true){
+  console.log(departments)
+}
 const roles=[{"name":"Admin"},{"name":"User"}]
 
 
@@ -78,7 +81,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
               <Input value="{modalType=="edit"?`${form?.user.username}`:""}" name="email" id="email" label="" type="email" placeholder="Email address"></Input>              
               <Select defaultValue="Role" content="{modalType=="edit"?`${form?.user.role}`:""}" options={roles} id="role" name="role"></Select>            
                 <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
-                <Select defaultValue="Department" content="{modalType=="edit"?`${form?.user.department_id}`:""}" options={deparments} id="department" name="department"></Select>
+                <Select defaultValue="Department" content="{modalType=="edit"?`${form?.user.department}`:""}" options={departments} id="department" name="department"></Select>
                 <Input value="{modalType=="edit"?`${form?.user.password}`:""}" name="password" id="password" label="" type="password" placeholder="Password"></Input>
               </div>
             <Errors errors={form?.errors} />
@@ -107,7 +110,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
               <th scope="col" class="py-3.5 pl-6 pr-3 text-left text-lg font-bold text-white sm:pl-0">Name</th>
               <th scope="col" class="py-3.5 px-3 text-left text-base font-semibold text-white">Role</th>
               <th scope="col" class="py-3.5 px-3 text-left text-base font-semibold text-white">Phone</th>
-              <th scope="col" class="py-3.5 px-3 text-left text-base font-semibold text-white">Deparment</th>
+              <th scope="col" class="py-3.5 px-3 text-left text-base font-semibold text-white">Department</th>
               <th scope="col" class="py-3.5 px-3 text-center text-base font-semibold text-white">Action</th>
               <th scope="col" class="relative py-3.5 pl-3 pr-6 sm:pr-0"></th>
             </tr>
@@ -118,12 +121,12 @@ const roles=[{"name":"Admin"},{"name":"User"}]
               <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{user.first_name} {user.last_name} {user.username}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.mobile}</td>
-              <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department_id}</td>
+              <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department}</td>
               <td class="whitespace-nowrap py-4 flex flex-row pl-3 pr-6 text-right text-base font-medium sm:pr-0 space-x-2">
-                <form action="?/getUser" method="POST" use:enhance>
+                <!-- <form action="?/getUser" method="POST" use:enhance>
                   <UserButton on:event={()=>showModal=true}/>
                   <input type="hidden" name="id" value="{user.user_id}">
-                </form>
+                </form> -->
                 <form action="?/getUser" method="POST" use:enhance>
                   <EditButton on:event={()=>{showModal=true;
                   modalType="edit"

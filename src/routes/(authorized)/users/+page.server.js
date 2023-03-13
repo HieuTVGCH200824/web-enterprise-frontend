@@ -5,8 +5,9 @@ import * as api from '$lib/api.js';
 export async function load({locals}) {
 
     const {users} = await api.get('users',locals.user.Token )
-    
-    return {users}
+    const resDepartment= await api.get('departments',locals.user.Token )
+    const departments = resDepartment.data
+    return { users , departments}
     
 }
 
@@ -29,7 +30,7 @@ export const actions = {
             password: data.get('password'),
             mobile: data.get('mobile'),
             role: data.get('role'),
-            department_id: data.get('department'),
+            department: data.get('department'),
         }
         const body = await api.put(`users/${data.get('id')}`,form,locals.user.Token);
         
@@ -53,7 +54,7 @@ export const actions = {
                 password: data.get('password'),
                 mobile: data.get('mobile'),
                 role: data.get('role'),
-                department_id: data.get('department'),
+                department: data.get('department'),
             });
             if (body.error) {
                 return fail(400, body);

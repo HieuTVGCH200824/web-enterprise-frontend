@@ -9,6 +9,7 @@
     import EditButton from "../../../components/Button/EditButton.svelte";
     import CrudCard from "../../../components/CrudCard.svelte";
 	import SubmitButton from "../../../components/Button/SubmitButton.svelte";
+    import UserButton from "../../../components/Button/UserButton.svelte"
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -68,7 +69,44 @@ $: if(search){
         <Search bind:value={search}></Search>
     </div>
     <CreateButton on:event={()=>{showModal=true}}>Create Category</CreateButton>
-    <div class="md:w-[60%] w-full">
+    <div class="flow-root">
+        <div class="-my-2 mx-6lg:-mx-24">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table class=" divide-y divide-gray-300">
+                <thead>
+                <tr>
+                    <th scope="col" class="py-3.5 pl-6 pr-3 text-left text-lg font-bold text-white sm:pl-0">Name</th>
+
+                    <th scope="col" class="py-3.5 px-3 text-center text-base font-semibold text-white">Action</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-6 sm:pr-0"></th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                {#each categories as category}
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{category.name}</td>
+
+                  <td class="whitespace-nowrap py-4 flex flex-row pl-3 pr-6 text-right text-base font-medium sm:pr-0 space-x-2">
+                    <div class="self-start pl-5 pt-4 flex flex-row space-x-3">
+                        <form action="?/getCategory" method="POST" use:enhance>
+                            <input type="hidden" name="id" value ="{category._id}">
+                            <EditButton on:event={()=>{showModal=true;modalType="edit"}}></EditButton>
+                        </form>
+                        <form action="?/deleteCategory" method="POST" use:enhance>
+                            <input type="hidden" name="id" value ="{category._id}">
+                            <DeleteButton></DeleteButton>
+                        </form>
+                    </div>
+                  </td>
+                </tr>
+                {/each}
+                <!-- More people... -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <!-- <div class="md:w-[60%] w-full">
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
             {#each categories as category}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
@@ -86,5 +124,5 @@ $: if(search){
                 </div>
             {/each}
         </div>
-    </div>
+    </div> -->
 </div>
