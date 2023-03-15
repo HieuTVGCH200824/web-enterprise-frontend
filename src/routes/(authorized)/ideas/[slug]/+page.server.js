@@ -4,6 +4,9 @@ import { redirect,fail } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params, locals }) {    
 	const res = await api.get(`ideas/${params.slug}`, locals.user.token);
+	if(res.error){
+		return {error: res.error}
+	}
     const idea = await res.data
 	const user = await locals.user
 	return { idea :idea, user:user };
@@ -18,10 +21,9 @@ export const actions = {
 			idea_id: data.get('ideaId'),
 			comment: data.get('comment')
 		}
-		console.log(form)
 		const res = await api.post(`comments`,form,locals.user.token );
 		if (res.error) {
-			return fail(400, res);
+			return {error: res.error}
 		}else{
 			return{success: true}
 		}

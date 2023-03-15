@@ -47,7 +47,9 @@ $: if(search){
     users = data.users;
 }
 
-
+$: if(form?.error){
+        alert(form.error)
+    }
 
 
 

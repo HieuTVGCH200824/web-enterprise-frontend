@@ -5,7 +5,10 @@ import * as api from '$lib/api.js';
 export async function load({locals}) {
 
     const res = await api.get('categories',locals.user.Token )
-        const categories = res.data
+    if(res.error){
+        return {error: res.error}
+    }
+    const categories = res.data
     return {categories :categories}
 }
 
@@ -18,7 +21,7 @@ export const actions = {
         }
         const body = await api.post(`categories`,form,locals.user.Token );
         if (body.error) {
-            return fail(400, body);
+            return {error: body.error}
         }else{
             return{success: true}
         }
@@ -27,8 +30,9 @@ export const actions = {
         const data = await request.formData();
         const form = data.get('id')
         const category = await api.get(`categories/${form}`,locals.user.Token );
-        console.log(category)
-
+        if(category.error){
+            return {error: category.error}
+        }
         return {category :category.data}
     },
     async editCategory({request, locals}) {
@@ -40,7 +44,7 @@ export const actions = {
         console.log(form)
         const res = await api.put(`categories/${form._id}`,form,locals.user.Token );
         if (res.error) {
-            return fail(400, res);
+            return {error: res.error}
         }else{
             return{success: true}
         }
@@ -50,7 +54,7 @@ export const actions = {
         const form = data.get('id')
         const res = await api.del(`categories/${form}`,locals.user.Token );
         if (res.error) {
-            return fail(400, res);
+            return {error: res.error}
         }else{
             return{success: true}
         }

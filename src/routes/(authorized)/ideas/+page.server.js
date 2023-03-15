@@ -10,6 +10,9 @@ export async function load({locals}) {
         user: locals.user,
         category: category.data
     }
+    if (res.error || category.error) {
+        return {error: res.error || category.error}
+    }
     return {body}
 }
 
@@ -25,6 +28,9 @@ export const actions = {
         }
         const res = await api.get(`ideas/${form.id}`, locals.user.token);
         const idea = res.data
+        if (res.error) {
+            return {error: res.error}
+        }
         return {idea : idea}
     },
     createIdea: async ({ request, locals }) => {
@@ -39,7 +45,7 @@ export const actions = {
 		const res = await api.post('ideas', form, locals.user.token);
 		console.log(res)
          if (res.error) {
-            return fail(400, res);
+            return {error: res.error}
         }else{
             return{success: true}
         }
@@ -54,7 +60,7 @@ export const actions = {
     }
     const res = await api.put(`ideas/${form._id}`, form, locals.user.token);
     if (res.error) {
-        return fail(400, res);
+        return {error: res.error}
     }else{
         return{success: true}
     }
@@ -66,7 +72,7 @@ export const actions = {
     }
     const res = await api.del(`ideas/${form._id}`, locals.user.token);
     if (res.error) {
-        return fail(400, res);
+        return {error: res.error}
     }else{
         return{success: true}
     }

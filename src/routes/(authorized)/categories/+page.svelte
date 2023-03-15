@@ -31,6 +31,10 @@ $: if(form?.success){
   form=null;
 }
 
+$: if(form?.error){
+        alert(form.error)
+    }
+
 let categories  = data.categories;
 
 $: if(search){
@@ -80,7 +84,7 @@ $: if(search){
                     <th scope="col" class="py-3.5 px-3 text-center text-base font-semibold text-white">Action</th>
                     <th scope="col" class="relative py-3.5 pl-3 pr-6 sm:pr-0"></th>
                 </tr>
-              </thead>
+                </thead>
               <tbody class="divide-y divide-gray-200">
                 {#each categories as category}
                 <tr>
@@ -105,7 +109,7 @@ $: if(search){
             </table>
           </div>
         </div>
-      </div>
+    </div>
     <!-- <div class="md:w-[60%] w-full">
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
             {#each categories as category}

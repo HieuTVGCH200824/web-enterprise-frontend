@@ -5,8 +5,16 @@
     import { enhance } from '$app/forms';
     import Errors from '$lib/Error.svelte';
 
+
+
 	/** @type {import('./$types').ActionData} */
 	export let form :any;
+
+    $: if(form?.error){
+        alert(form.error)
+    }
+
+    
 </script>
 <div class="flex items-center justify-center h-full w-full fixed bg-background-indigo">
     <div class="flex justify-center lg:space-x-40 max-lg:h-full items-center w-full max-lg:flex-col ">

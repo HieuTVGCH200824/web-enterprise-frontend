@@ -16,6 +16,9 @@ import { enhance } from "$app/forms";
         form=null;
         alert("Successfully perform action")
     }
+    $: if(form?.error){
+        alert(form.error)
+    }
 
 </script>
 

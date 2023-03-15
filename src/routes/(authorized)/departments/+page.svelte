@@ -29,6 +29,9 @@ $: if(form?.success){
   showModal =false;
   form=null;
 }
+$: if(form?.error){
+        alert(form.error)
+    }
 
 let departments  = data.departments;
 

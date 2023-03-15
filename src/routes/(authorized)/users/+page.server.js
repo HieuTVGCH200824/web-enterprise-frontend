@@ -7,6 +7,10 @@ export async function load({locals}) {
     const {users} = await api.get('users',locals.user.Token )
     const resDepartment= await api.get('departments',locals.user.Token )
     const departments = resDepartment.data
+    if (users.error || resDepartment.error) {
+        return {error: users.error || resDepartment.error}
+    }
+
     return { users , departments}
     
 }
@@ -18,6 +22,9 @@ export const actions = {
 	getUser: async ({ request,locals }) => {
 		const data = await request.formData();
         const {user} = await api.get(`users/${data.get('id')}`,locals.user.Token)
+        if (user.error) {
+            return {error: user.error}
+        }
         return{user}
 	},
     editUser: async ({ request,locals }) => {
@@ -35,7 +42,7 @@ export const actions = {
         const body = await api.put(`users/${data.get('id')}`,form,locals.user.Token);
         
         if (body.error) {
-            return fail(400, body);
+            return {error: body.error}
         }else{
             return{success: true}
         }
@@ -44,6 +51,8 @@ export const actions = {
     deleteUser : async ({ request,locals }) => {
         const data = await request.formData();
         const {message} = await api.del(`users/${data.get('id')}`,locals.user.Token)
+        if (message.error) {
+            return {error: message.error}}
     },
     createUser : async ({ request , cookies }) => {
             const data = await request.formData();
@@ -57,7 +66,7 @@ export const actions = {
                 department: data.get('department'),
             });
             if (body.error) {
-                return fail(400, body);
+                return {error: body.error}
             }else{
                 return{success: true}
             }

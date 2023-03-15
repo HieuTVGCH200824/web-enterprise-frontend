@@ -20,7 +20,7 @@ export const actions = {
 
 
 		if (body.error) {
-			return fail(400, body);
+			return {error: body.error}
 		}
 
 		const value = btoa(JSON.stringify(body.user));

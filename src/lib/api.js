@@ -18,11 +18,9 @@ async function send({ method, path, data, token }) {
 	const body = await res.json();
 
 
-	if (res.status == 200) {
-		return body;
-	}
+	return body;
+	
 
-	throw error(res.status);
 }
 
 export function get(path, token) {

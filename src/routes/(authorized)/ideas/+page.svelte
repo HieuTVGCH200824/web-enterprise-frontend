@@ -29,6 +29,10 @@ $: if(true){
     console.log(form?.success);
 }
 
+$: if(form?.error){
+        alert(form.error)
+    }
+
 $: if(!showModal){
   modalType = "";
 }

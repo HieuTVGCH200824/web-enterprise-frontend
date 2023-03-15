@@ -5,7 +5,10 @@ import * as api from '$lib/api.js';
 export async function load({locals}) {
 
     const res = await api.get('departments',locals.user.Token )
-        const departments = res.data
+    if(res.error){
+        return {error: res.error}
+    }
+    const departments = res.data
     return {departments :departments}
 }
 
@@ -18,7 +21,7 @@ export const actions = {
         }
         const body = await api.post(`departments`,form,locals.user.Token );
         if (body.error) {
-            return fail(400, body);
+            return {error: body.error}
         }else{
             return{success: true}
         }
@@ -27,8 +30,9 @@ export const actions = {
         const data = await request.formData();
         const form = data.get('id')
         const department = await api.get(`departments/${form}`,locals.user.Token );
-        console.log(department)
-
+        if(department.error){
+            return {error: department.error}
+        }
         return {department :department.data}
     },
     async editDepartment({request, locals}) {
@@ -40,7 +44,7 @@ export const actions = {
         console.log(form)
         const res = await api.put(`departments/${form._id}`,form,locals.user.Token );
         if (res.error) {
-            return fail(400, res);
+            return {error: res.error}
         }else{
             return{success: true}
         }
@@ -50,7 +54,7 @@ export const actions = {
         const form = data.get('id')
         const res = await api.del(`departments/${form}`,locals.user.Token );
         if (res.error) {
-            return fail(400, res);
+            return {error: res.error}
         }else{
             return{success: true}
         }
