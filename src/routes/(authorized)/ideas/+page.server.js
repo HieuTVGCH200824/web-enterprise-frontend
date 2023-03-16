@@ -35,28 +35,59 @@ export const actions = {
     },
     createIdea: async ({ request, locals }) => {
 		const data = await request.formData();
+        const imageForm = new FormData();
+        const image = await data.get('image')
+        imageForm.append('image', image)
+
+        const imageRes = await fetch("https://api.imgur.com/3/upload",{
+            method: 'POST',
+            headers: {
+                'Authorization': 'Client-ID 611da03d2b6e91c'
+            },
+            body:imageForm
+        })
+        const imageData = await imageRes.json()
+        const imageLink = imageData.data.link
+
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
-			department: locals.user.department_id,
+			department: locals.user.department,
 			user_id: locals.user._id,
-            category: data.get('category')
+            category: data.get('category'),
+            image: imageLink
 		}
+
 		const res = await api.post('ideas', form, locals.user.token);
-		console.log(res)
-         if (res.error) {
-            return {error: res.error}
-        }else{
-            return{success: true}
-        }
+            if (res.error) {
+                return {error: res.error}
+            }else{
+                return{success: true}
+            }
 	},
     updateIdea: async ({ request, locals }) => {
         const data = await request.formData();
+
+        const imageForm = new FormData();
+        const image = await data.get('image')
+        imageForm.append('image', image)
+
+        const imageRes = await fetch("https://api.imgur.com/3/upload",{
+            method: 'POST',
+            headers: {
+                'Authorization': 'Client-ID 611da03d2b6e91c'
+            },
+            body:imageForm
+        })
+        const imageData = await imageRes.json()
+        const imageLink = imageData.data.link
+
         const form = {
             _id: data.get('id'),
             title: data.get('title'),
             content: data.get('content'),
             category: data.get('category'),
+            image: imageLink
     }
     const res = await api.put(`ideas/${form._id}`, form, locals.user.token);
     if (res.error) {

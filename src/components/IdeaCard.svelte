@@ -1,7 +1,7 @@
 <script lang="ts">
     export let idea : Object;
 </script>
-<div class="bg-gray-400 w-full h-48 rounded-3xl flex items-center flex-col justify-end shadow-2xl shadow-black">
+<div class="bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full h-48 rounded-3xl flex items-center flex-col justify-end shadow-2xl shadow-black bg-center bg-cover bg-no-repeat" style={idea.image?`background-image: url('${idea.image}')`:""}>
     <div class="w-full h-[60%] rounded-b-3xl flex flex-col justify-end space-y-4 bg-card-indigo/50">
         <div class=" flex flex-col pl-4 pt-2 w-full">
             <p class="font-bold text-xl">

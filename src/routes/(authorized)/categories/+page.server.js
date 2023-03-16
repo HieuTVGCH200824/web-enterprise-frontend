@@ -41,7 +41,6 @@ export const actions = {
             _id: data.get('id'),
             name: data.get('name')
         }
-        console.log(form)
         const res = await api.put(`categories/${form._id}`,form,locals.user.Token );
         if (res.error) {
             return {error: res.error}

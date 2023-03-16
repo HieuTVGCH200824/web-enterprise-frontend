@@ -55,9 +55,7 @@ $: if(form?.error){
 
 
 let departments=data.departments
-$:if(true){
-  console.log(departments)
-}
+
 const roles=[{"name":"Admin"},{"name":"User"}]
 
 

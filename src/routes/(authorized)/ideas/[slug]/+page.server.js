@@ -5,7 +5,6 @@ import { redirect,fail } from '@sveltejs/kit';
 export async function load({ params, locals }) {    
 	const res = await api.get(`ideas/${params.slug}`, locals.user.token);
 	const comments = await api.get(`ideas/comments/${params.slug}`, locals.user.token);
-	console.log(comments)
 	if(res.error || comments.error){
 		return {error: res.error || comments.error}
 	}

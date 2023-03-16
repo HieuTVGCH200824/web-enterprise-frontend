@@ -50,10 +50,10 @@ import { enhance } from "$app/forms";
         </div>
         {#if showComment}
         <div class="space-y-5 pl-10">
+            {#if data.comments}
             {#each data.comments as comment}
             <div class="flex flex-row items-center justify-start space-x-5">
-                <div class="w-10 rounded-3xl h-10 bg-gray-300"></div>
-                <div class="py-2 pl-3 pr-10 w-fit max-w-full bg-gray-300  rounded-3xl flex items-start justify-center flex-col">
+                <div class="py-2 pl-3 pr-10 w-fit max-w-[90%] bg-gray-300  rounded-3xl flex items-start justify-center flex-col">
                     <h1 class="text-black ">Anonymous</h1>
                     <p class="text-gray-600 break-all whitespace-normal">
                         {comment.comment}
@@ -62,6 +62,7 @@ import { enhance } from "$app/forms";
                 
             </div>
             {/each}
+            {/if}
         </div>
         {/if}
         <div class="h-3/4 px-10 pb-20 min-h-fit ">

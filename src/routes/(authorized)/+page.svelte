@@ -1,12 +1,80 @@
+<script lang="ts">
+import LikeButton from "../../components/Button/LikeButton.svelte";
+import DislikeButton from "../../components/Button/DislikeButton.svelte";
+import CommentButton from "../../components/Button/CommentButton.svelte";
+import Textarea from "../../components/Textarea.svelte";
+import LoginButton from "../../components/Button/LoginButton.svelte";
+import {enhance} from "$app/forms";
 
-<div class="h-full w-full text-white"><div class="mx-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet sapien eu tortor gravida suscipit id efficitur lacus. Pellentesque blandit ut nulla ut rutrum. Etiam ac elementum tellus. Proin vel pellentesque ipsum. Fusce quis dui molestie ex convallis blandit eget et libero. Nulla facilisi. Aenean odio dui, auctor dignissim orci efficitur, tincidunt ultrices ante. In volutpat egestas augue, vel faucibus tortor rhoncus sit amet. Donec blandit condimentum arcu vel convallis.
+/** @type {import('./$types').PageData} */
+export let data:any;
 
-    Cras tellus urna, hendrerit at enim non, consequat consequat tellus. Etiam in elit ut ligula posuere efficitur a ut nisl. Aenean dictum maximus risus, eu ultricies nisi commodo id. Fusce vel elit pharetra, fringilla lorem vel, aliquet dui. Aenean hendrerit magna eu hendrerit ultricies. Maecenas imperdiet purus vitae lacus congue euismod. Nullam pharetra lobortis neque, vel egestas elit rhoncus at. Fusce et nisl efficitur, venenatis nunc vel, auctor diam. Donec iaculis sem id sapien sodales sagittis. Sed eu libero bibendum purus varius sollicitudin. Duis feugiat quam in justo facilisis rutrum. Etiam lacus elit, aliquam nec sagittis quis, efficitur in eros. Ut auctor ipsum eu quam pellentesque semper. Nulla facilisi.
-    
-    Sed at velit ut risus bibendum luctus. Ut eget lectus imperdiet, porta sapien eu, pharetra ipsum. Proin elit ipsum, elementum ac finibus sit amet, mollis nec erat. Etiam porttitor dignissim augue. Etiam vehicula metus at nisi pharetra, non elementum velit finibus. Vivamus sagittis maximus velit, at accumsan lorem hendrerit nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris fermentum magna id blandit condimentum. Nullam sapien neque, laoreet quis dui nec, vulputate malesuada leo. Integer efficitur mi at turpis consectetur lacinia a quis neque. Vivamus varius lectus mauris.
-    
-    Quisque elementum ut massa vel sagittis. Curabitur nec tincidunt felis, eget blandit nibh. Mauris egestas tellus nunc. Ut pretium augue risus, ut imperdiet sem fringilla eu. Mauris dapibus maximus ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam commodo, mi nec rhoncus cursus, arcu sapien elementum purus, vel semper dolor ante at purus. Praesent pulvinar nunc ut ex posuere, mollis faucibus tortor vulputate.
-    
-    Sed auctor quam ac dapibus tincidunt. Vivamus porttitor mattis sodales. Sed quis arcu porttitor, semper nibh eu, gravida arcu. In eget ante arcu. Vivamus eu lectus justo. Etiam quis eros eu nulla egestas vestibulum eget sed nisl. Cras consectetur velit nec tristique semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras sollicitudin viverra nisl nec ornare. Fusce dapibus tortor sit amet tortor mattis eleifend. Nulla sed faucibus neque, id dignissim erat.
-    
-    Generated 5 paragraphs, 419 words, 2813 bytes of Lorem Ipsum Bottom</div></div>
+/** @type {import('./$types').ActionData} */
+export let form:any;
+
+let showComment =true;
+</script>
+<div class="h-full w-full text-white"><div class="mx-10">
+    {#if data.body.ideas}
+    <div class="space-y-10">
+    {#each data.body.ideas as idea}
+    <div class="bg-card-indigo space-y-10">
+        <div class="px-10 space-y-5 py-3">
+            <div class="pl-10 flex flex-col justify-center items-start w-fit space-y-1">
+                <h2 class="">
+                    Anonymous
+                </h2>
+                <h4 class="text-xs">
+                    {idea.created_at}
+                </h4>
+            </div>
+            <div>
+                <h1 class="text-xl">{idea.title}</h1>
+            </div>
+            <div>
+                <p class="text-justify">{idea.content}</p>
+            </div>
+        </div>
+        <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
+            <LikeButton></LikeButton>
+            <DislikeButton></DislikeButton>
+            <CommentButton on:event={()=>{showComment=!showComment}}></CommentButton>
+        </div>
+        {#if showComment}
+        <div class="space-y-5 pl-10">
+            {#if data.body.comments}
+            {#each data.body.comments as comment}
+            {#if comment.idea_id==idea._id}
+            <div class="flex flex-row items-center justify-start space-x-5">
+                <div class="py-2 pl-3 pr-10 w-fit max-w-[90%] bg-gray-300  rounded-3xl flex items-start justify-center flex-col">
+                    <h1 class="text-black ">Anonymous</h1>
+                    <p class="text-gray-600 break-all whitespace-normal">
+                        {comment.comment}
+                    </p>
+                </div>
+                
+            </div>
+            {/if}
+            
+            {/each}
+            {/if}
+        </div>
+        {/if}
+        <div class="h-3/4 px-10 pb-20 min-h-fit ">
+            <div>
+                <form action="?/addComment" use:enhance method="POST" class="flex items-center justify-start">
+                    <input type="hidden" value={idea._id} id="id" name="ideaId"/>
+                    <div class="w-full relative">
+                        <Textarea className="bg-white text-black" label="" value="" id="" placeholder="Comment" name="comment"></Textarea>
+                        <div class="min-w-fit w-24 absolute pr-3 right-0 top-5">
+                            <LoginButton formaction="?/addComment">Submit</LoginButton>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {/each}
+    </div>
+    {/if}
+</div></div>

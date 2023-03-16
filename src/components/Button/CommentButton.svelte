@@ -4,7 +4,6 @@
 
     function handleEvent() {
         dispatch("event");
-        console.log("event")
     }
 </script>
 <button on:click={handleEvent} class="w-fit hover:text-violet-500">
