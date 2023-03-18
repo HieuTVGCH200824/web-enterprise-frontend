@@ -79,16 +79,22 @@ $: if (search) {
                 </div>       
             </div>
             <div>
-                <ChooseFile
+                <div class="flex flex-row items-center space-x-4">
+                    <h1>Images: </h1>
+                    <ChooseFile
                     type="file"
                     accept="image/*"
                     name="image"
-                />
-                <ChooseFile
+                    />
+                </div>
+                <div class="flex flex-row items-center space-x-4">
+                    <h1>Attachment: </h1>
+                    <ChooseFile
                     type="file"
                     accept="*/*"
                     name="attachment"
-                />
+                    />
+                </div>
             </div>
 
             <div class="flex justify-center items-center space-x-5">

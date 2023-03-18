@@ -12,7 +12,6 @@ export async function load({ locals }) {
 	if (res.error || comments.error) {
 		return { error: res.error || comments.error };
 	}
-	console.log(body)
 	return { body };
 }
 

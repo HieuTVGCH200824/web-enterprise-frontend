@@ -13,6 +13,7 @@ export async function load({locals}) {
     if (res.error || category.error) {
         return {error: res.error || category.error}
     }
+
     return {body}
 }
 
@@ -22,9 +23,6 @@ export const actions = {
         const req = await request.formData();
         const form= {
             id: req.get('id'),
-            title: req.get('title'),
-            category: req.get('category'),
-            content: req.get('content'),
         }
         const res = await api.get(`ideas/${form.id}`, locals.user.token);
         const idea = res.data
@@ -39,15 +37,8 @@ export const actions = {
         const image = await data.get('image')
         imageForm.append('image', image)
 
-        const imageRes = await fetch("https://api.imgur.com/3/upload",{
-            method: 'POST',
-            headers: {
-                'Authorization': 'Client-ID 611da03d2b6e91c'
-            },
-            body:imageForm
-        })
-        const imageData = await imageRes.json()
-        const imageLink = imageData.data.link
+        const imageRes = await api.uploadImage(imageForm);
+        const imageLink = imageRes.link
 
 		const form = {
 			title: data.get('title'),
@@ -67,28 +58,26 @@ export const actions = {
 	},
     updateIdea: async ({ request, locals }) => {
         const data = await request.formData();
-
         const imageForm = new FormData();
         const image = await data.get('image')
-        imageForm.append('image', image)
-
-        const imageRes = await fetch("https://api.imgur.com/3/upload",{
-            method: 'POST',
-            headers: {
-                'Authorization': 'Client-ID 611da03d2b6e91c'
-            },
-            body:imageForm
-        })
-        const imageData = await imageRes.json()
-        const imageLink = imageData.data.link
-
-        const form = {
+        let form = {
             _id: data.get('id'),
             title: data.get('title'),
             content: data.get('content'),
             category: data.get('category'),
-            image: imageLink
-    }
+        }
+        if(image?.name == "undefined" ){
+            const res = await api.get(`ideas/${form._id}`, locals.user.token);
+            const idea = res.data
+            // @ts-ignore
+            form.image = idea.image
+        }else{
+            const imageRes = await api.uploadImage(image);
+            const imageLink = imageRes.link
+            // @ts-ignore
+            form.image = imageLink
+        }
+        
     const res = await api.put(`ideas/${form._id}`, form, locals.user.token);
     if (res.error) {
         return {error: res.error}

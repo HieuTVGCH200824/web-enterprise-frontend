@@ -38,3 +38,29 @@ export function post(path, data, token) {
 export function put(path, data, token) {
 	return send({ method: 'PUT', path, data, token });
 }
+
+export async function getImage(id) {
+	const imageRes = await fetch(`https://api.imgur.com/3/image/${id}`,{
+            method: 'GET',
+            headers: {
+                'Authorization': 'Client-ID 611da03d2b6e91c'
+            },
+        })
+        const imageData = await imageRes.json()
+		return imageData.data
+}
+
+export async function uploadImage(image) {
+	const imageForm = new FormData();
+    imageForm.append('image', image)
+	const imageRes = await fetch("https://api.imgur.com/3/upload",{
+            method: 'POST',
+            headers: {
+                'Authorization': 'Client-ID 611da03d2b6e91c'
+            },
+            body:imageForm
+        })
+		
+        const imageData = await imageRes.json()
+		return imageData.data
+	}
