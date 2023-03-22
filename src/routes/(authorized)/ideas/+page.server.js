@@ -66,8 +66,10 @@ export const actions = {
             content: data.get('content'),
             category: data.get('category'),
         }
+       
+        
         if(image?.name == "undefined" ){
-            const res = await api.get(`ideas/${form._id}`, locals.user.token);
+            const res = await api.get(`users/${form._id}`, locals.user.token);
             const idea = res.data
             // @ts-ignore
             form.image = idea.image

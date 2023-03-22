@@ -12,7 +12,7 @@
     if (event.key === 'Enter' && !event.shiftKey && name=="comment") {
       event.preventDefault();
       const form = event.target.form;
-      if (form) form.submit();
+      if (form) form.requestSubmit();
     }
   }
 

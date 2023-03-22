@@ -12,6 +12,7 @@ import Modal from '../../../components/Modal.svelte'
   import SubmitButton from "../../../components/Button/SubmitButton.svelte";
 	import Select from "../../../components/Select.svelte";
   import Search from "../../../components/SearchBar/Search.svelte";
+  import ChooseFile from "../../../components/ChooseFile.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -83,6 +84,14 @@ const roles=[{"name":"Admin"},{"name":"User"}]
                 <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
                 <Select defaultValue="Department" content="{modalType=="edit"?`${form?.user.department}`:""}" options={departments} id="department" name="department"></Select>
                 <Input value="{modalType=="edit"?`${form?.user.password}`:""}" name="password" id="password" label="" type="password" placeholder="Password"></Input>
+                <div class="flex flex-row items-center space-x-4">
+                  <h1>Images: </h1>
+                  <ChooseFile
+                  type="file"
+                  accept="image/*"
+                  name="image"
+                  />
+              </div>
               </div>
             <Errors errors={form?.errors} />
             <div class="flex flex-col h-full space-y-10">
@@ -118,7 +127,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
           <tbody class="divide-y divide-gray-200">
             {#each users as user}
             <tr>
-              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{user.first_name} {user.last_name} {user.username}</td>
+              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0 flex flex-row items-center space-x-2"><img src="{user.image}" class="w-10 h-10 rounded-3xl" alt="avatar"><p>{user.first_name} {user.last_name} {user.username}</p> </td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.mobile}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department}</td>

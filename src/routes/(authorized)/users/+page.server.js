@@ -29,6 +29,7 @@ export const actions = {
 	},
     editUser: async ({ request,locals }) => {
 		const data = await request.formData();
+        const image = data.get('image')
         const form = {
             _id: data.get('id'),
             username: data.get('email'),
@@ -38,7 +39,22 @@ export const actions = {
             mobile: data.get('mobile'),
             role: data.get('role'),
             department: data.get('department'),
+            image: image
         }
+    
+        if(image?.name == "undefined" ){
+            const res = await api.get(`users/${form._id}`, locals.user.token);
+            const idea = res.data
+            // @ts-ignore
+            form.image = idea.image
+        }else{
+            const imageRes = await api.uploadImage(image);
+            const imageLink = imageRes.link
+            // @ts-ignore
+            form.image = imageLink
+        }
+        
+     
         const body = await api.put(`users/${data.get('id')}`,form,locals.user.Token);
         
         if (body.error) {
@@ -56,6 +72,8 @@ export const actions = {
     },
     createUser : async ({ request , cookies }) => {
             const data = await request.formData();
+            const imageRes = await api.uploadImage(data.get('image'))
+            const image = imageRes.link
             const body = await api.post('users/signup', {
                 username: data.get('email'),
                 first_name: data.get('first_name'),
@@ -64,6 +82,7 @@ export const actions = {
                 mobile: data.get('mobile'),
                 role: data.get('role'),
                 department: data.get('department'),
+                image: image
             });
             if (body.error) {
                 return {error: body.error}

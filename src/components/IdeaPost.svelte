@@ -1,0 +1,100 @@
+<script lang="ts">
+import LikeButton from "./Button/LikeButton.svelte";
+import DislikeButton from "./Button/DislikeButton.svelte";
+import CommentButton from "./Button/CommentButton.svelte";
+import Textarea from "./Textarea.svelte";
+import LoginButton from "./Button/LoginButton.svelte";
+import {enhance} from "$app/forms";
+	import EditButton from "./Button/EditButton.svelte";
+	import DeleteButton from "./Button/DeleteButton.svelte";
+
+
+export let idea : any;
+export let comments : any;
+export let user :any;
+export let getComment:any;
+
+let showEdit:boolean = false;
+
+let show :boolean = false;
+
+</script>
+
+<div class="bg-card-indigo rounded-xl space-y-10">
+    <div class="px-10 space-y-5 py-3">
+        <div class="pl-10 flex flex-col justify-center items-start w-fit space-y-1">
+            <h2 class="">
+                Anonymous
+            </h2>
+            <h4 class="text-xs">
+                {idea.created_at}
+            </h4>
+        </div>
+        <div>
+            <h1 class="text-xl">{idea.title}</h1>
+        </div>
+        <div>
+            <p class="text-justify">{idea.content}</p>
+        </div>
+    </div>
+    <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
+        <LikeButton></LikeButton>
+        <DislikeButton></DislikeButton>
+        <CommentButton on:event={()=>{show=!show}}></CommentButton>
+    </div>
+    {#if show}
+    <div class="space-y-5 pl-10">
+        {#if comments }
+        {#each comments as comment}
+        {#if comment.idea_id == idea._id }
+        <div class="flex flex-row items-center justify-start space-x-5 group">
+            <div class="py-2 pl-3 pr-10 w-fit max-w-[90%] bg-gray-300  rounded-3xl flex items-start justify-center flex-col">
+                <h1 class="text-black ">Anonymous</h1>
+                {#if getComment && getComment._id == comment._id && showEdit == true}
+                <form action="?/editComment" on:submit={()=>{showEdit=false; getComment =null}} use:enhance method="POST" class="flex items-center justify-start">
+                        <input type="hidden" value={getComment._id} id="id" name="commentId"/>
+                        <input type="hidden" value={getComment.username} id="username" name="username"/>
+                        <input type="hidden" value={getComment.idea_id} id="ideaId" name="ideaId"/>
+                        <input type="hidden" value={getComment.is_anonymous} id="isAnonymous" name="isAnonymous"/>
+                    <div class="w-full relative">
+                        <Textarea className="bg-white text-black" label="" value="{getComment.comment}" id="" placeholder="Comment" name="comment"></Textarea>
+                    </div>
+                </form>
+                {:else }
+                    <p class="text-gray-600 break-all whitespace-normal">
+                        {comment.comment}
+                    </p>
+                    {/if}
+                
+            </div>
+            {#if user.username == comment.username}
+                <div class="hidden group-hover:flex space-x-2 flex-row items-center">
+                    {#if !getComment || getComment._id != comment._id}
+                    <form action="?/getComment" method="POST" use:enhance>
+                        <input type="hidden" value={comment._id} id="id" name="commentId"/>
+                        <EditButton on:event={()=>{showEdit=true}}></EditButton>
+                    </form>
+                    {/if}
+                    <form action="?/deleteComment" method="POST" use:enhance>
+                        <input type="hidden" value={comment._id} id="id" name="commentId"/>
+                        <DeleteButton></DeleteButton>
+                    </form>
+                </div>
+            {/if}
+        </div>
+        {/if}
+        {/each}
+        {/if}
+    </div>
+    {/if}
+    <div class="h-3/4 px-10 pb-20 min-h-fit ">
+        <div>
+            <form action="?/addComment"  use:enhance method="POST" class="flex items-center justify-start">
+                <input type="hidden" value={idea._id} id="id" name="ideaId"/>
+                <div class="w-full relative">
+                    <Textarea className="bg-white text-black" label="" value="" id="" placeholder="Comment" name="comment"></Textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
