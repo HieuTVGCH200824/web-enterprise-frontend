@@ -12,6 +12,7 @@
 	import Select from '../../../components/Select.svelte';
 	import SubmitButton from '../../../components/Button/SubmitButton.svelte';
 	import ChooseFile from '../../../components/ChooseFile.svelte';
+	import ToggleButton from '../../../components/Button/ToggleButton.svelte';
 
 
     /** @type {import('./$types').PageData} */
@@ -53,7 +54,10 @@ $: if (search) {
     } else {
         ideas = data.body.ideas;
     }
-
+let anonymousIdea : boolean = false;
+function handleToggle(event){
+    anonymousIdea = event.detail;
+}
 </script>
 
 
@@ -78,7 +82,7 @@ $: if (search) {
                     <Textarea className="" name="content" label="" value="{modalType=="edit"?`${form?.idea.content}`:""}" id="" placeholder="{modalType=="edit"?`${form?.idea.content}`:`${data.body.user.first_name} ${data.body.user.last_name}, what are you thinking?`} "/>
                 </div>       
             </div>
-            <div>
+            <div class="space-y-5">
                 <div class="flex flex-row items-center space-x-4">
                     <h1>Images: </h1>
                     <ChooseFile
@@ -94,6 +98,11 @@ $: if (search) {
                     accept="*/*"
                     name="attachment"
                     />
+                </div>
+                <div class="flex flex-row items-center space-x-4">
+                    <h1>Anonymous: </h1>
+                    <ToggleButton on:event={handleToggle}/>
+                    <input type="hidden" value={anonymousIdea} id="isAnonymous" name="isAnonymous"/>
                 </div>
             </div>
 
@@ -116,7 +125,9 @@ $: if (search) {
     <CreateButton on:event={()=>{showModal=true}}>Create Idea</CreateButton>
     <div class="md:w-[60%] w-full">
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
+            {#if ideas}
             {#each ideas as idea}
+            {#if idea.username == data.body.user.username }
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
                     <a href="/ideas/{idea._id}" class="h-full w-full">
                     <IdeaCard idea={idea}></IdeaCard>
@@ -132,7 +143,9 @@ $: if (search) {
                         </form>
                     </div>
                 </div>
+            {/if}
             {/each}
+            {/if}
         </div>
     </div>
 </div>

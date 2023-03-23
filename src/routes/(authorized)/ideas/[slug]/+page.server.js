@@ -17,13 +17,61 @@ export async function load({ params, locals }) {
 export const actions = {
 	async addComment ({request, locals}) {
 		const data = await request.formData();
+		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
 		const form = {
 			user_id: locals.user._id,
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
-			comment: data.get('comment')
+			comment: data.get('comment'),
+			is_anonymous: isAnonymous
 		}
 		const res = await api.post(`comments`,form,locals.user.token );
+		if (res.error) {
+			return {error: res.error}
+		}else{
+			return{success: true}
+		}
+	},
+	async getComment({request, locals}) {
+		const data = await request.formData();
+		const form = await data.get('commentId');
+		const res = await api.get(`comments/${form}`,locals.user.token );
+		if (res.error) {
+			return {error: res.error}
+		}else{
+			return{ getComment: res.data}
+		}
+	},
+
+	async editComment ({request, locals}) {
+		const data = await request.formData();
+		const form = {
+			_id: data.get('commentId'),
+			comment: data.get('comment'),
+			idea_id: data.get('ideaId'),
+			username: data.get('username'),
+		}
+		if( data.get('isAnonymous') ==="true"){
+			// @ts-ignore
+			form.is_anonymous = true
+		}else{
+			// @ts-ignore
+			form.is_anonymous = false
+		}
+		console.log(form)
+		const res = await api.put(`comments/${form._id}`,form,locals.user.token );
+		console.log(res)
+		if (res.error) {
+			return {error: res.error}
+		}else if(res.success){
+			return{success: true}
+		}
+	},
+
+	async deleteComment ({request, locals}) {
+		const data = await request.formData();
+		const form = await data.get('commentId');
+		const res = await api.del(`comments/${form}`,locals.user.token );
 		if (res.error) {
 			return {error: res.error}
 		}else{

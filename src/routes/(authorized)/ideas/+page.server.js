@@ -35,20 +35,25 @@ export const actions = {
 		const data = await request.formData();
         const imageForm = new FormData();
         const image = await data.get('image')
+		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
         imageForm.append('image', image)
-
-        const imageRes = await api.uploadImage(imageForm);
-        const imageLink = imageRes.link
-
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
 			department: locals.user.department,
-			user_id: locals.user._id,
+			username: locals.user.username,
             category: data.get('category'),
-            image: imageLink
+            is_anonymous: isAnonymous
 		}
 
+        
+            const imageRes = await api.uploadImage(image);
+            const imageLink = imageRes.link
+            // @ts-ignore
+            form.image = imageLink
+        
+        
+        console.log(form)
 		const res = await api.post('ideas', form, locals.user.token);
             if (res.error) {
                 return {error: res.error}

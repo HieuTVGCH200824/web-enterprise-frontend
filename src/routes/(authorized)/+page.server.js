@@ -4,13 +4,15 @@ import * as api from '$lib/api.js';
 export async function load({ locals }) {
 	const res = await api.get('ideas', locals.user.token);
 	const comments = await api.get('comments', locals.user.token);
+	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	const body = {
 		ideas: res.data,
 		user: locals.user,
-		comments: comments.data
+		comments: comments.data,
+		votes: votes.data
 	};
-	if (res.error || comments.error) {
-		return { error: res.error || comments.error };
+	if (res.error || comments.error|| votes.error) {
+		return { error: res.error || comments.error|| votes.error};
 	}
 	return { body };
 }
@@ -19,11 +21,13 @@ export async function load({ locals }) {
 export const actions = {
 	async addComment ({request, locals}) {
 		const data = await request.formData();
+		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
 		const form = {
 			user_id: locals.user._id,
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
-			comment: data.get('comment')
+			comment: data.get('comment'),
+			is_anonymous: isAnonymous
 		}
 		const res = await api.post(`comments`,form,locals.user.token );
 		if (res.error) {
@@ -78,6 +82,25 @@ export const actions = {
 			return{success: true}
 		}
 	},
+	async upVote({request, locals}) {
+		const data = await request.formData();
+		const form = {
+			username: locals.user.username,
+			idea_id: data.get('ideaId'),
+		}
+		console.log(form)
+		await api.post('up-vote',form,locals.user.token );
+	},
+	async downVote({request, locals}) {
+		const data = await request.formData();
+		const form = {
+			username: locals.user.username,
+			idea_id: data.get('ideaId'),
+		}
+		console.log(form)
+		await api.post('down-vote',form,locals.user.token );
+	},
+	
 	logout: async ({ cookies, locals }) => {
 		cookies.delete('jwt', { path: '/' });
 		locals.user = null;

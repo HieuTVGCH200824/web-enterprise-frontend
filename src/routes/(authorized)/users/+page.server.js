@@ -39,14 +39,15 @@ export const actions = {
             mobile: data.get('mobile'),
             role: data.get('role'),
             department: data.get('department'),
-            image: image
         }
     
         if(image?.name == "undefined" ){
             const res = await api.get(`users/${form._id}`, locals.user.token);
-            const idea = res.data
+            const user= res.user
+            console.log(user)
             // @ts-ignore
-            form.image = idea.image
+            form.image = user.image
+            console.log(form.image)
         }else{
             const imageRes = await api.uploadImage(image);
             const imageLink = imageRes.link
@@ -66,9 +67,7 @@ export const actions = {
 	},
     deleteUser : async ({ request,locals }) => {
         const data = await request.formData();
-        const {message} = await api.del(`users/${data.get('id')}`,locals.user.Token)
-        if (message.error) {
-            return {error: message.error}}
+        const message = await api.del(`users/${data.get('id')}`,locals.user.Token)
     },
     createUser : async ({ request , cookies }) => {
             const data = await request.formData();

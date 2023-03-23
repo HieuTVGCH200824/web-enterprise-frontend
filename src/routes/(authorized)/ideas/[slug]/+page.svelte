@@ -23,12 +23,14 @@
 		alert(form.error);
 	}
 
-	$: idea = data.idea;
-	$: comments = data.comments;
+	let getComment :any = null;
+	$: if(form?.getComment){
+    getComment = form.getComment;
+}
 
-	let showComment: boolean = true;
+	
 </script>
 
 <div class="h-full">
-	<IdeaPost idea={data.idea} comments={data.comments} />
+	<IdeaPost user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
 </div>

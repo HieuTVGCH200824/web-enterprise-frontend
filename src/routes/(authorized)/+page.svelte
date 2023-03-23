@@ -34,7 +34,7 @@ $: if(form?.getComment){
     {#if data.body.ideas}
     <div class="space-y-10">
     {#each data.body.ideas as idea}
-        <IdeaPost user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
+        <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
     {/each}
     </div>
     {/if}

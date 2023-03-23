@@ -7,16 +7,36 @@ import LoginButton from "./Button/LoginButton.svelte";
 import {enhance} from "$app/forms";
 	import EditButton from "./Button/EditButton.svelte";
 	import DeleteButton from "./Button/DeleteButton.svelte";
+	import ToggleButton from "./Button/ToggleButton.svelte";
+	import { dataset_dev } from "svelte/internal";
 
 
 export let idea : any;
 export let comments : any;
 export let user :any;
+export let votes:any;
 export let getComment:any;
+
+let anonymousComment : boolean = false;
 
 let showEdit:boolean = false;
 
 let show :boolean = false;
+
+function handleToggle(event){
+    anonymousComment = event.detail;
+}
+
+let voteState :number = -1;
+
+$: if(votes && votes.username == user.username && votes.up_vote){
+    voteState = 1;
+}else if(votes && votes.username == user.username && votes.down_vote){
+    voteState = 0;
+}else{
+    voteState = -1;
+}
+
 
 </script>
 
@@ -24,7 +44,11 @@ let show :boolean = false;
     <div class="px-10 space-y-5 py-3">
         <div class="pl-10 flex flex-col justify-center items-start w-fit space-y-1">
             <h2 class="">
-                Anonymous
+                {#if idea.is_anonymous == true}
+                    Anonymous
+                {:else}
+                    {idea.username}
+                {/if}
             </h2>
             <h4 class="text-xs">
                 {idea.created_at}
@@ -38,8 +62,14 @@ let show :boolean = false;
         </div>
     </div>
     <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
-        <LikeButton></LikeButton>
-        <DislikeButton></DislikeButton>
+            <form use:enhance method="POST" action="?/upVote">
+                <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
+                <LikeButton voteState={voteState}></LikeButton>
+            </form>
+            <form use:enhance method="POST" action="?/downVote">
+                <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
+                <DislikeButton voteState={voteState}></DislikeButton>
+            </form>
         <CommentButton on:event={()=>{show=!show}}></CommentButton>
     </div>
     {#if show}
@@ -49,7 +79,17 @@ let show :boolean = false;
         {#if comment.idea_id == idea._id }
         <div class="flex flex-row items-center justify-start space-x-5 group">
             <div class="py-2 pl-3 pr-10 w-fit max-w-[90%] bg-gray-300  rounded-3xl flex items-start justify-center flex-col">
-                <h1 class="text-black ">Anonymous</h1>
+                <h1 class="text-black ">
+                    {#if comment.is_anonymous == false}
+                    <span class="text-slate-900">
+                        {comment.username}
+                    </span>
+                    {:else}
+                    <span class="text-violet-700">
+                        Anonymous
+                    </span>
+                    {/if}
+                </h1>
                 {#if getComment && getComment._id == comment._id && showEdit == true}
                 <form action="?/editComment" on:submit={()=>{showEdit=false; getComment =null}} use:enhance method="POST" class="flex items-center justify-start">
                         <input type="hidden" value={getComment._id} id="id" name="commentId"/>
@@ -89,8 +129,15 @@ let show :boolean = false;
     {/if}
     <div class="h-3/4 px-10 pb-20 min-h-fit ">
         <div>
-            <form action="?/addComment"  use:enhance method="POST" class="flex items-center justify-start">
+            <form action="?/addComment"  use:enhance method="POST" class="flex flex-col items-start justify-center">
+                <div class="flex flex-row items-center justify-center space-x-5 pb-3">
+                    <span>
+                        Anonymous:
+                    </span>
+                    <ToggleButton on:event={handleToggle}/>
+                </div>
                 <input type="hidden" value={idea._id} id="id" name="ideaId"/>
+                <input type="hidden" value={anonymousComment} id="isAnonymous" name="isAnonymous"/>
                 <div class="w-full relative">
                     <Textarea className="bg-white text-black" label="" value="" id="" placeholder="Comment" name="comment"></Textarea>
                 </div>
