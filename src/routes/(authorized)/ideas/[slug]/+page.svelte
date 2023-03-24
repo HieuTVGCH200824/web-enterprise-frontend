@@ -26,11 +26,14 @@
 	let getComment :any = null;
 	$: if(form?.getComment){
     getComment = form.getComment;
-}
+	}
 
+	$:if(true){
+		console.log(data.votes)
+	}
 	
 </script>
 
 <div class="h-full">
-	<IdeaPost user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
+	<IdeaPost votes={data.votes} user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
 </div>

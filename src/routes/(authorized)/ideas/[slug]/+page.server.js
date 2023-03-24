@@ -5,12 +5,13 @@ import { redirect,fail } from '@sveltejs/kit';
 export async function load({ params, locals }) {    
 	const res = await api.get(`ideas/${params.slug}`, locals.user.token);
 	const comments = await api.get(`ideas/comments/${params.slug}`, locals.user.token);
-	if(res.error || comments.error){
-		return {error: res.error || comments.error}
+	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
+	if(res.error || comments.error|| votes.error){
+		return {error: res.error || comments.error|| votes.error};
 	}
     const idea = await res.data
 	const user = await locals.user
-	return { idea :idea, user:user, comments: comments.data };
+	return { idea :idea, user:user, comments: comments.data, votes: votes.data };
 }
 
 /** @type {import('./$types').Actions}*/
@@ -58,9 +59,7 @@ export const actions = {
 			// @ts-ignore
 			form.is_anonymous = false
 		}
-		console.log(form)
 		const res = await api.put(`comments/${form._id}`,form,locals.user.token );
-		console.log(res)
 		if (res.error) {
 			return {error: res.error}
 		}else if(res.success){
@@ -78,4 +77,27 @@ export const actions = {
 			return{success: true}
 		}
 	},
+
+	async upVote({request, locals}) {
+		const data = await request.formData();
+		const form = {
+			username: locals.user.username,
+			idea_id: data.get('ideaId'),
+		}
+		console.log(form)
+		const res =  await api.post('up-vote',form,locals.user.token );
+		console.log(res)
+	},
+	async downVote({request, locals}) {
+		const data = await request.formData();
+		const form = {
+			username: locals.user.username,
+			idea_id: data.get('ideaId'),
+		}
+		console.log(form)
+		const res = await api.post('down-vote',form,locals.user.token );
+		console.log(res)
+
+	},
+	
 }

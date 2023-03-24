@@ -8,7 +8,7 @@ import {enhance} from "$app/forms";
 	import EditButton from "./Button/EditButton.svelte";
 	import DeleteButton from "./Button/DeleteButton.svelte";
 	import ToggleButton from "./Button/ToggleButton.svelte";
-	import { dataset_dev } from "svelte/internal";
+	import { dataset_dev, onMount } from "svelte/internal";
 
 
 export let idea : any;
@@ -27,15 +27,14 @@ function handleToggle(event){
     anonymousComment = event.detail;
 }
 
-let voteState :number = -1;
 
-$: if(votes && votes.username == user.username && votes.up_vote){
-    voteState = 1;
-}else if(votes && votes.username == user.username && votes.down_vote){
-    voteState = 0;
-}else{
-    voteState = -1;
-}
+$: postVotes = votes.find(
+        (vote) => vote.idea_id == idea._id
+    );
+
+
+
+
 
 
 </script>
@@ -64,11 +63,11 @@ $: if(votes && votes.username == user.username && votes.up_vote){
     <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
             <form use:enhance method="POST" action="?/upVote">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
-                <LikeButton voteState={voteState}></LikeButton>
+                <LikeButton vote={postVotes?.up_vote}></LikeButton>
             </form>
             <form use:enhance method="POST" action="?/downVote">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
-                <DislikeButton voteState={voteState}></DislikeButton>
+                <DislikeButton vote={postVotes?.down_vote}></DislikeButton>
             </form>
         <CommentButton on:event={()=>{show=!show}}></CommentButton>
     </div>

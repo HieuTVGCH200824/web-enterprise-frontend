@@ -53,7 +53,6 @@ export const actions = {
             form.image = imageLink
         
         
-        console.log(form)
 		const res = await api.post('ideas', form, locals.user.token);
             if (res.error) {
                 return {error: res.error}

@@ -44,10 +44,8 @@ export const actions = {
         if(image?.name == "undefined" ){
             const res = await api.get(`users/${form._id}`, locals.user.token);
             const user= res.user
-            console.log(user)
             // @ts-ignore
             form.image = user.image
-            console.log(form.image)
         }else{
             const imageRes = await api.uploadImage(image);
             const imageLink = imageRes.link

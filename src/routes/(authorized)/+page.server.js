@@ -2,7 +2,7 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
-	const res = await api.get('ideas', locals.user.token);
+	const res = await api.get('ideas-not-paging', locals.user.token);
 	const comments = await api.get('comments', locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	const body = {
@@ -62,9 +62,7 @@ export const actions = {
 			// @ts-ignore
 			form.is_anonymous = false
 		}
-		console.log(form)
 		const res = await api.put(`comments/${form._id}`,form,locals.user.token );
-		console.log(res)
 		if (res.error) {
 			return {error: res.error}
 		}else if(res.success){
@@ -89,7 +87,8 @@ export const actions = {
 			idea_id: data.get('ideaId'),
 		}
 		console.log(form)
-		await api.post('up-vote',form,locals.user.token );
+		const res =  await api.post('up-vote',form,locals.user.token );
+		console.log(res)
 	},
 	async downVote({request, locals}) {
 		const data = await request.formData();
@@ -98,7 +97,9 @@ export const actions = {
 			idea_id: data.get('ideaId'),
 		}
 		console.log(form)
-		await api.post('down-vote',form,locals.user.token );
+		const res = await api.post('down-vote',form,locals.user.token );
+		console.log(res)
+
 	},
 	
 	logout: async ({ cookies, locals }) => {

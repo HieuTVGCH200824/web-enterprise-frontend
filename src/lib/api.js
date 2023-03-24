@@ -4,21 +4,24 @@ const base ='http://localhost:8080';
 
 
 async function send({ method, path, data, token }) {
-	const opts = { method, headers: {} };
-
-	if (data) {
-		opts.headers['Content-Type'] = 'application/json';
-		opts.body = JSON.stringify(data);
+	try{
+		const opts = { method, headers: {} };
+		if (data) {
+			opts.headers['Content-Type'] = 'application/json';
+			opts.body = JSON.stringify(data);
+		}
+		
+		if (token) {
+			opts.headers['Authorization'] = `Token ${token}`;
+		}
+		const res = await fetch(`${base}/${path}`, opts);
+		const body = await res.json();
+		
+		
+		return body;
+	}catch(error){
+		console.log(error)
 	}
-
-	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
-	}
-	const res = await fetch(`${base}/${path}`, opts);
-	const body = await res.json();
-
-
-	return body;
 	
 
 }
@@ -64,3 +67,4 @@ export async function uploadImage(image) {
         const imageData = await imageRes.json()
 		return imageData.data
 	}
+

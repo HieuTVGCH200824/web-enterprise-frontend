@@ -28,13 +28,12 @@ $: if(form?.getComment){
 }
 
 
-
 </script>
 <div class="h-full w-full text-white"><div class="mx-10">
     {#if data.body.ideas}
     <div class="space-y-10">
     {#each data.body.ideas as idea}
-        <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
+            <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
     {/each}
     </div>
     {/if}
