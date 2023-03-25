@@ -127,7 +127,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
           <tbody class="divide-y divide-gray-200">
             {#each users as user}
             <tr>
-              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0 flex flex-row items-center space-x-2"><img src="{user.image}" class="w-10 h-10 rounded-3xl" alt="avatar"><p>{user.first_name} {user.last_name} {user.username}</p> </td>
+              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0 flex flex-row items-center space-x-2"><img src="{user.image}" class="w-10 h-10 rounded-3xl" alt=""><p>{user.first_name} {user.last_name} {user.username}</p> </td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.mobile}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department}</td>

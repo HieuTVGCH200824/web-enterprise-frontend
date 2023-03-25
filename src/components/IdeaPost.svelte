@@ -41,12 +41,17 @@ $: postVotes = votes?.find(
 
 <div class="bg-card-indigo rounded-xl space-y-10">
     <div class="px-10 space-y-5 py-3">
-        <div class="pl-10 flex flex-col justify-center items-start w-fit space-y-1">
+        <div class=" flex flex-col justify-center items-start w-fit space-y-2">
             <h2 class="">
                 {#if idea.is_anonymous == true}
                     Anonymous
                 {:else}
-                    {idea.username}
+                <div class="flex flex-row items-center space-x-3">
+                    <img src={user.image} alt="" class="w-10 h-10 rounded-full">
+                    <span>
+                        {idea.username}
+                    </span>
+                </div>
                 {/if}
             </h2>
             <h4 class="text-xs">
