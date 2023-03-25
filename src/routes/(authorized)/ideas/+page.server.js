@@ -3,7 +3,7 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
-    const res = await api.get('ideas',locals.user.Token )
+    const res = await api.get('ideas-not-paging',locals.user.Token )
     const category = await api.get('categories',locals.user.Token )
     const body = {
         ideas: res.data,
