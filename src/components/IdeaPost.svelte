@@ -28,7 +28,7 @@ function handleToggle(event){
 }
 
 
-$: postVotes = votes.find(
+$: postVotes = votes?.find(
         (vote) => vote.idea_id == idea._id
     );
 

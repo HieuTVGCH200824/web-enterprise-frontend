@@ -34,6 +34,7 @@ export function del(path, token) {
 	return send({ method: 'DELETE', path, token });
 }
 
+
 export function post(path, data, token) {
 	return send({ method: 'POST', path, data, token });
 }

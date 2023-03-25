@@ -36,6 +36,7 @@ export const actions = {
 			return{success: true}
 		}
 	},
+	
 	async getComment({request, locals}) {
 		const data = await request.formData();
 		const form = await data.get('commentId');
