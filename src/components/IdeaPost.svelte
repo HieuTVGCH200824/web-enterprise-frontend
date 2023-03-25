@@ -4,11 +4,12 @@ import DislikeButton from "./Button/DislikeButton.svelte";
 import CommentButton from "./Button/CommentButton.svelte";
 import Textarea from "./Textarea.svelte";
 import LoginButton from "./Button/LoginButton.svelte";
-import {enhance} from "$app/forms";
+import {applyAction, enhance} from "$app/forms";
 	import EditButton from "./Button/EditButton.svelte";
 	import DeleteButton from "./Button/DeleteButton.svelte";
 	import ToggleButton from "./Button/ToggleButton.svelte";
-	import { dataset_dev, onMount } from "svelte/internal";
+    import * as api from '$lib/api.js';
+	import { onMount } from "svelte";
 
 
 export let idea : any;
@@ -16,6 +17,15 @@ export let comments : any;
 export let user :any;
 export let votes:any;
 export let getComment:any;
+
+
+let ideaOwner : any = null;
+
+onMount(()=>{
+    async function getIdeaOwner (){
+    ideaOwner = await api.get(`user/${idea.username}`);
+}
+})
 
 let anonymousComment : boolean = false;
 
@@ -47,7 +57,7 @@ $: postVotes = votes?.find(
                     Anonymous
                 {:else}
                 <div class="flex flex-row items-center space-x-3">
-                    <img src={user.image} alt="" class="w-10 h-10 rounded-full">
+                    <img src={ideaOwner?.image} alt="" class="w-10 h-10 rounded-full">
                     <span>
                         {idea.username}
                     </span>
@@ -66,11 +76,11 @@ $: postVotes = votes?.find(
         </div>
     </div>
     <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
-            <form use:enhance method="POST" action="?/upVote">
+            <form use:enhance method="POST" action="?/upVote" class="flex items-center">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
                 <LikeButton vote={postVotes?.up_vote}></LikeButton>
             </form>
-            <form use:enhance method="POST" action="?/downVote">
+            <form use:enhance method="POST" action="?/downVote" class="flex items-center">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
                 <DislikeButton vote={postVotes?.down_vote}></DislikeButton>
             </form>

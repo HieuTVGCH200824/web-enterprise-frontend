@@ -33,6 +33,7 @@ $: if(form?.success){
 
 $: if(form?.error){
         alert(form.error)
+        form = null
     }
 
 $: if(!showModal){
@@ -107,7 +108,7 @@ function handleToggle(event){
             </div>
 
             <div class="flex justify-center items-center space-x-5">
-                <Checkbox label="" value="" id=""></Checkbox><p>Agree to the terms & conditions</p>
+                <Checkbox name="term" label="" value="agree" id=""></Checkbox><a class="hover:text-violet-400" target="_blank" href="/terms">Agree to the terms & conditions</a>
             </div>
             <div class="w-full px-2 flex justify-center">
                 <SubmitButton>Post</SubmitButton>
@@ -118,7 +119,7 @@ function handleToggle(event){
 </Modal>
 {/if}
 
-<div class="bg-card-indigo flex items-center justify-center flex-col space-y-10 w-full h-fit py-10">
+<div class="bg-card-indigo flex items-center justify-center flex-col space-y-10 w-full h-fit py-10 ">
     <div class="w-[40%]">
         <Search bind:value={search}></Search>
     </div>

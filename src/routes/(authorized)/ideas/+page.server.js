@@ -37,6 +37,11 @@ export const actions = {
         const image = await data.get('image')
 		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
         imageForm.append('image', image)
+
+        if(data.get('term') !="agree"){
+            return {error: "You must agree to the terms and conditions"}
+        }
+
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
