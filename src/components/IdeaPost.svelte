@@ -3,13 +3,13 @@ import LikeButton from "./Button/LikeButton.svelte";
 import DislikeButton from "./Button/DislikeButton.svelte";
 import CommentButton from "./Button/CommentButton.svelte";
 import Textarea from "./Textarea.svelte";
-import LoginButton from "./Button/LoginButton.svelte";
-import {applyAction, enhance} from "$app/forms";
+import {enhance} from "$app/forms";
 	import EditButton from "./Button/EditButton.svelte";
 	import DeleteButton from "./Button/DeleteButton.svelte";
 	import ToggleButton from "./Button/ToggleButton.svelte";
     import * as api from '$lib/api.js';
 	import { onMount } from "svelte";
+	import { comment } from "postcss";
 
 
 export let idea : any;
@@ -22,7 +22,7 @@ export let getComment:any;
 let ideaOwner : any = null;
 
 onMount(()=>{
-    async function getIdeaOwner (){
+    async ()=>{
     ideaOwner = await api.get(`user/${idea.username}`);
 }
 })
@@ -37,9 +37,11 @@ function handleToggle(event){
     anonymousComment = event.detail;
 }
 
+$: commentCount = comments?.filter((comment) => comment.idea_id == idea._id).length;
+
 
 $: postVotes = votes?.find(
-        (vote) => vote.idea_id == idea._id
+        (vote) => vote.idea_id == idea._id 
     );
 
 
@@ -69,22 +71,31 @@ $: postVotes = votes?.find(
             </h4>
         </div>
         <div>
-            <h1 class="text-xl">{idea.title}</h1>
+            <a href="/ideas/{idea._id}" class="hover:opacity-50 duration-300 hover:text-violet-400">
+                <h1 class="text-xl">{idea.title}</h1>
+            </a>
         </div>
         <div>
             <p class="text-justify">{idea.content}</p>
         </div>
+        <div class="flex items-center justify-center">
+            <a href="{idea.image}" target="_blank" class=" hover:opacity-50 duration-300">
+                <img src={idea.image} alt="" class="max-h-[200px]">
+            </a>
+        </div>
     </div>
-    <div class="w-full flex items-center space-x-3 h-10 bg-[#393D5D] drop-shadow-[#fff] shadow-white px-10 z-50">
+    <div class="w-full h-fit flex items-center space-x-3 bg-[#393D5D] drop-shadow-[#fff] shadow-white pb-2 pt-4  px-10 z-50">
             <form use:enhance method="POST" action="?/upVote" class="flex items-center">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
-                <LikeButton vote={postVotes?.up_vote}></LikeButton>
+                <LikeButton vote={postVotes?.up_vote}><span class="text-emerald-300">{idea.up_vote}</span></LikeButton>
             </form>
             <form use:enhance method="POST" action="?/downVote" class="flex items-center">
                 <input type="hidden" value={idea._id} id="ideaId" name="ideaId"/>
-                <DislikeButton vote={postVotes?.down_vote}></DislikeButton>
+                <DislikeButton vote={postVotes?.down_vote}>
+                    <span class="text-rose-300">{idea.down_vote}</span>
+                </DislikeButton>
             </form>
-        <CommentButton on:event={()=>{show=!show}}></CommentButton>
+        <CommentButton on:event={()=>{show=!show}}>{commentCount}</CommentButton>
     </div>
     {#if show}
     <div class="space-y-5 pl-10">

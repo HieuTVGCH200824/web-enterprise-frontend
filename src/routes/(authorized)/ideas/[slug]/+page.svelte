@@ -28,9 +28,6 @@
     getComment = form.getComment;
 	}
 
-	$:if(true){
-		console.log(data.votes)
-	}
 	
 </script>
 

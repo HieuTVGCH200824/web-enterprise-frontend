@@ -1,10 +1,9 @@
 import * as api from '$lib/api.js';
-import { redirect,fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params, locals }) {    
 	const res = await api.get(`ideas/${params.slug}`, locals.user.token);
-	const comments = await api.get(`ideas/comments/${params.slug}`, locals.user.token);
+	const comments = await api.get(`comments/`, locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	if(res.error || comments.error|| votes.error){
 		return {error: res.error || comments.error|| votes.error};
@@ -84,9 +83,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		console.log(form)
 		const res =  await api.post('up-vote',form,locals.user.token );
-		console.log(res)
 	},
 	async downVote({request, locals}) {
 		const data = await request.formData();
@@ -94,9 +91,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		console.log(form)
 		const res = await api.post('down-vote',form,locals.user.token );
-		console.log(res)
 
 	},
 	

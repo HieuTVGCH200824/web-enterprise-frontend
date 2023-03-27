@@ -87,9 +87,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		console.log(form)
 		const res =  await api.post('up-vote',form,locals.user.token );
-		console.log(res)
 	},
 	async downVote({request, locals}) {
 		const data = await request.formData();
@@ -97,9 +95,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		console.log(form)
 		const res = await api.post('down-vote',form,locals.user.token );
-		console.log(res)
 
 	},
 	

@@ -35,6 +35,8 @@ export const actions = {
 		const data = await request.formData();
         const imageForm = new FormData();
         const image = await data.get('image')
+        const attachment =  data.get('attachment')
+        console.log(attachment)
 		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
         imageForm.append('image', image)
 
@@ -51,14 +53,22 @@ export const actions = {
             is_anonymous: isAnonymous
 		}
 
+     
+
         
             const imageRes = await api.uploadImage(image);
             const imageLink = imageRes.link
             // @ts-ignore
             form.image = imageLink
-        
-        
+        console.log(form)
+        // const fileRes = await api.post('upload-file',file,)
 		const res = await api.post('ideas', form, locals.user.token);
+        console.log(res)
+        // const uploadForm = {
+        //     file_name: attachment,
+        //     created_by: locals.user.username,
+        //     idea_id: form.
+        // }
             if (res.error) {
                 return {error: res.error}
             }else{
