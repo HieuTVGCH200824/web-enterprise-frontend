@@ -10,6 +10,7 @@ import Modal from '../../../components/Modal.svelte'
 	import Select from "../../../components/Select.svelte";
   import Search from "../../../components/SearchBar/Search.svelte";
   import ChooseFile from "../../../components/ChooseFile.svelte";
+  import Pagination from "../../../components/Pagination.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -44,6 +45,7 @@ $: if(search){
 }else{
     users = data.users;
 }
+let paginatedUsers = users;
 
 $: if(form?.error){
         alert(form.error)
@@ -107,6 +109,9 @@ const roles=[{"name":"Admin"},{"name":"User"}]
     <Search bind:value={search}></Search>
   </div>
   <CreateButton on:event={()=>{showModal=!showModal; form=null; modalType="create"}}>Create User</CreateButton>
+  {#if users.length<=0}
+    <h1>There are no registered users</h1>
+  {:else}
   <div class="flow-root">
     <div class="-my-2 mx-6lg:-mx-24">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -122,7 +127,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            {#each users as user}
+            {#each paginatedUsers as user}
             <tr>
               <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0 flex flex-row items-center space-x-2"><img src="{user.image}" class="w-10 h-10 rounded-3xl" alt=""><p>{user.first_name} {user.last_name} {user.username}</p> </td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
@@ -146,9 +151,11 @@ const roles=[{"name":"Admin"},{"name":"User"}]
             <!-- More people... -->
           </tbody>
         </table>
+        <Pagination bind:data={users} bind:paginatedData={paginatedUsers}></Pagination>
       </div>
     </div>
   </div>
+  {/if}
 </div>
 
 

@@ -7,6 +7,7 @@
     import DeleteButton from "../../../components/Button/DeleteButton.svelte";
     import EditButton from "../../../components/Button/EditButton.svelte";
 	import SubmitButton from "../../../components/Button/SubmitButton.svelte";
+    import Pagination from "../../../components/Pagination.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -40,6 +41,7 @@ $: if(search){
     categories = data.categories;
 }
 
+let paginatedCategories = categories;
 
 
 </script>
@@ -83,7 +85,7 @@ $: if(search){
                 </tr>
                 </thead>
               <tbody class="divide-y divide-gray-200">
-                {#each categories as category}
+                {#each paginatedCategories as category}
                 <tr>
                   <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{category.name}</td>
 
@@ -107,23 +109,6 @@ $: if(search){
           </div>
         </div>
     </div>
-    <!-- <div class="md:w-[60%] w-full">
-        <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
-            {#each categories as category}
-            <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
-                    <CrudCard title={category.name}></CrudCard>
-                    <div class="self-start pl-5 pt-4 flex flex-row space-x-3">
-                        <form action="?/getCategory" method="POST" use:enhance>
-                            <input type="hidden" name="id" value ="{category._id}">
-                            <EditButton on:event={()=>{showModal=true;modalType="edit"}}></EditButton>
-                        </form>
-                        <form action="?/deleteCategory" method="POST" use:enhance>
-                            <input type="hidden" name="id" value ="{category._id}">
-                            <DeleteButton></DeleteButton>
-                        </form>
-                    </div>
-                </div>
-            {/each}
-        </div>
-    </div> -->
+    <Pagination bind:data={categories} bind:paginatedData={paginatedCategories}></Pagination>
+
 </div>

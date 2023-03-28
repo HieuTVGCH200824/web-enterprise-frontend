@@ -44,14 +44,14 @@
     }
 
 </script>
-<nav class="flex items-center justify-between border-t border-gray-400 px-12 sm:mx-20">
-    <div class="-mt-px flex w-0 flex-1">
-        {#if currentPage > 1}
-		<button on:click={previousPage}
-			class="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-violet-500 hover:border-violet-400 hover:text-violet-700"
-		>
+<nav class="flex justify-between border-t border-gray-400 px-12 sm:mx-20">
+        <div class="flex-1">
+            {#if currentPage > 1}
+            <button on:click={previousPage}
+			class="inline-flex border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-violet-500 hover:border-violet-400 hover:text-violet-700"
+            >
 			<svg
-				class="mr-3 h-5 w-5 text-violet-400"
+            class="mr-3 h-5 w-5 text-violet-400"
 				viewBox="0 0 20 20"
 				fill="currentColor"
 				aria-hidden="true"
@@ -80,10 +80,10 @@
         {/each}
     </div>
 
-	<div class="-mt-px flex w-0 flex-1 justify-end">
+	<div class="flex-1 flex justify-end">
         {#if currentPage < totalPages()}
 		<button on:click={nextPage}
-			class="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-violet-500 hover:border-violet-400 hover:text-violet-700"
+			class="inline-flex border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-violet-500 hover:border-violet-400 hover:text-violet-700"
 		>
 			Next
 			<svg
@@ -101,5 +101,6 @@
 		</button>
         {/if}
 	</div>
+
 </nav>
 

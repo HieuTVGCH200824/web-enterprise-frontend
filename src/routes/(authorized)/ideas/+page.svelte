@@ -13,6 +13,7 @@
 	import SubmitButton from '../../../components/Button/SubmitButton.svelte';
 	import ChooseFile from '../../../components/ChooseFile.svelte';
 	import ToggleButton from '../../../components/Button/ToggleButton.svelte';
+    import Pagination from '../../../components/Pagination.svelte';
 
 
     /** @type {import('./$types').PageData} */
@@ -45,15 +46,24 @@ $: if(form?.success){
   form=null;
   alert("Successfully perform action")
 }
+
+let paginatedIdeas=ideas;
+
 $: if (search) {
+
     ideas = data.body.ideas.filter((obj) => {
+            return obj.username == data.body.user.username
+        });
+    ideas = ideas.filter((obj) => {
         return (
         obj.title.toLowerCase().includes(search.toLowerCase()) ||
         obj.category.toLowerCase().includes(search.toLowerCase())
         );
     });
     } else {
-        ideas = data.body.ideas;
+        ideas = data.body.ideas.filter((obj) => {
+            return obj.username == data.body.user.username
+        });
     }
 let anonymousIdea : boolean = false;
 function handleToggle(event){
@@ -125,10 +135,9 @@ function handleToggle(event){
     </div>
     <CreateButton on:event={()=>{showModal=true}}>Create Idea</CreateButton>
     <div class="md:w-[60%] w-full">
+        {#if ideas.length > 0}
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
-            {#if ideas}
-            {#each ideas as idea}
-            {#if idea.username == data.body.user.username }
+            {#each paginatedIdeas as idea}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
                     <a href="/ideas/{idea._id}" class="h-full w-full">
                     <IdeaCard idea={idea}></IdeaCard>
@@ -144,9 +153,16 @@ function handleToggle(event){
                         </form>
                     </div>
                 </div>
-            {/if}
             {/each}
-            {/if}
+            <div class="col-span-2">
+                <Pagination bind:data={ideas} bind:paginatedData={paginatedIdeas}></Pagination>
+            </div>
         </div>
+        
+                    {:else}
+                    <div class="flex items-center justify-center w-full col-span-2 ">
+                        <h1 class="text-2xl font-semibold">No Ideas found</h1>
+                    </div>
+                    {/if}
     </div>
 </div>

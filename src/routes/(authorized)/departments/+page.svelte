@@ -7,8 +7,8 @@
     import Search from "../../../components/SearchBar/Search.svelte";
     import DeleteButton from "../../../components/Button/DeleteButton.svelte";
     import EditButton from "../../../components/Button/EditButton.svelte";
-    import CrudCard from "../../../components/CrudCard.svelte";
 	import SubmitButton from "../../../components/Button/SubmitButton.svelte";
+    import Pagination from "../../../components/Pagination.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -34,6 +34,7 @@ $: if(form?.error){
     }
 
 let departments  = data.departments;
+let paginatedDepartments = departments
 
 $: if(search){
     departments = data.departments.filter((department:any) => department.name.toLowerCase().includes(search.toLowerCase()));
@@ -71,6 +72,7 @@ $: if(search){
         <Search bind:value={search}></Search>
     </div>
     <CreateButton on:event={()=>{showModal=true}}>Create department</CreateButton>
+    {#if departments.length > 0}
     <div class="flow-root">
         <div class="-my-2 mx-6lg:-mx-24">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -84,7 +86,7 @@ $: if(search){
                 </tr>
                 </thead>
               <tbody class="divide-y divide-gray-200">
-                {#each departments as department}
+                {#each paginatedDepartments as department}
                 <tr>
                   <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0">{department.name}</td>
 
@@ -102,11 +104,16 @@ $: if(search){
                   </td>
                 </tr>
                 {/each}
-                <!-- More people... -->
               </tbody>
             </table>
           </div>
         </div>
     </div>
+    <Pagination bind:data={departments} bind:paginatedData={paginatedDepartments}></Pagination>
 
+    {:else}
+    <div class="flex flex-col items-center justify-center space-y-5">
+        <h1 class="text-3xl font-semibold font-mono">No departments found</h1>
+    </div>
+    {/if}
 </div>

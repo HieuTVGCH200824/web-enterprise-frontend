@@ -26,7 +26,8 @@ $: if(form?.getComment){
     getComment = form.getComment;
 }
 
-let ideas : any  = data.body.ideas;
+let ideas : any = [];
+
 let paginatedIdeas = ideas;
 
 $: if (search) {
@@ -35,6 +36,8 @@ $: if (search) {
         obj.title.toLowerCase().includes(search.toLowerCase())
         );
     });
+    }else{
+        ideas = data.body.ideas;
     }
 
 
@@ -48,7 +51,7 @@ $: if (search) {
         </div>
     </div>
     <div class="space-y-10 pb-12">
-        {#if ideas}
+        {#if ideas.length >0}
             {#each paginatedIdeas as idea}
                 <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
             {/each}

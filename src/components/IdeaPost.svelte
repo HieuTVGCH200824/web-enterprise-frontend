@@ -10,6 +10,7 @@ import {enhance} from "$app/forms";
     import * as api from '$lib/api.js';
 	import { onMount } from "svelte";
 	import { comment } from "postcss";
+	import ChevronButton from "./Button/ChevronButton.svelte";
 
 
 export let idea : any;
@@ -95,11 +96,10 @@ $: postVotes = votes?.find(
                     <span class="text-rose-300">{idea.down_vote}</span>
                 </DislikeButton>
             </form>
-        <CommentButton on:event={()=>{show=!show}}>{commentCount}</CommentButton>
+        <CommentButton on:event={()=>{show=!show}} state={show}>{commentCount}</CommentButton>
     </div>
     {#if show}
-    <div class="space-y-5 pl-10">
-        {#if comments }
+    <div class="space-y-5 pl-10 ">
         {#each comments as comment}
         {#if comment.idea_id == idea._id }
         <div class="flex flex-row items-center justify-start space-x-5 group">
@@ -129,7 +129,7 @@ $: postVotes = votes?.find(
                     <p class="text-gray-600 break-all whitespace-normal">
                         {comment.comment}
                     </p>
-                    {/if}
+                {/if}
                 
             </div>
             {#if user.username == comment.username}
@@ -149,7 +149,19 @@ $: postVotes = votes?.find(
         </div>
         {/if}
         {/each}
+        {#if commentCount == 0}
+        <div class="flex flex-row items-center justify-center">
+            <h1 class="text-gray-500">
+                No comments yet
+            </h1>
+            </div>
         {/if}
+
+    </div>
+    <div class="w-full flex items-center justify-center {commentCount>0?"flex":"hidden"}">
+        <div class="w-3/4 ">
+            <ChevronButton on:event={()=>show=false}>Hide comments</ChevronButton>
+        </div>
     </div>
     {/if}
     <div class="h-3/4 px-10 pb-20 min-h-fit ">
