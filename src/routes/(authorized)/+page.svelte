@@ -1,7 +1,7 @@
 <script lang="ts">
-	import IdeaCard from "../../components/IdeaCard.svelte";
-import IdeaPost from "../../components/IdeaPost.svelte";
+    import IdeaPost from "../../components/IdeaPost.svelte";
     import Search from "../../components/SearchBar/Search.svelte";
+    import Pagination from "../../components/Pagination.svelte";
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -26,7 +26,8 @@ $: if(form?.getComment){
     getComment = form.getComment;
 }
 
-let ideas : any = data.body.ideas;
+let ideas : any  = data.body.ideas;
+let paginatedIdeas = ideas;
 
 $: if (search) {
     ideas = data.body.ideas.filter((obj) => {
@@ -34,9 +35,9 @@ $: if (search) {
         obj.title.toLowerCase().includes(search.toLowerCase())
         );
     });
-    } else {
-        ideas = data.body.ideas;
     }
+
+
 
 </script>
 <div class="h-full w-full text-white"><div class="mx-10">
@@ -48,7 +49,8 @@ $: if (search) {
     </div>
     <div class="space-y-10">
         {#if ideas}
-            {#each ideas as idea}
+        <Pagination bind:data={ideas} bind:paginatedData={paginatedIdeas}></Pagination>
+            {#each paginatedIdeas as idea}
                 <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
             {/each}
         {:else}
