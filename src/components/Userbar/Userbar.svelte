@@ -2,6 +2,7 @@
 	import Usergroupbutton from "../Button/Usergroupbutton.svelte";
     import { createEventDispatcher } from "svelte";
     let barState :boolean=false;
+    export let user : any ;
     const dispatch = createEventDispatcher();
     function handleEvent() {
         dispatch("event");
@@ -15,4 +16,13 @@
             handleEvent()}
             }/>
     </div>
+    {#if barState}
+    <div class="flex items-center justify-center">
+        <div class="flex flex-col items-center space-y-5 pt-10">
+            <img src={user.image} class="w-20 h-20 rounded-full"/>
+            <h1 class="text-white text-2xl">{user.first_name} {user.last_name}</h1>
+            <h2 class="text-gray-400">{user.username}</h2>
+        </div>
+    </div>
+    {/if}
 </div>

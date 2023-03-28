@@ -3,6 +3,10 @@
     import Userbar from "../../components/Userbar/Userbar.svelte";
     import Searchbar from "../../components/SearchBar/Searchbar.svelte";
     let userBar : boolean =false;
+
+    /** @type {import('./$types').PageData} */
+export let data:any;
+
 </script>
 <div class="from-violet-200 to-violet-800 bg-gradient-to-tr h-full w-full fixed flex items-center justify-center">
     <div class="w-[97%] h-full md:mt-12 max-md:w-full sm:rounded-xl flex bg-card-indigo bg-opacity-50 relative">
@@ -13,6 +17,6 @@
                 <slot/>
             </div>
         </div>
-        <Userbar on:event={()=>{userBar=!userBar}}/>
+        <Userbar user={data} on:event={()=>{userBar=!userBar}}/>
     </div>
 </div>
