@@ -1,6 +1,5 @@
 
 <script lang="ts">
-	import { get } from "$lib/api";
 
 
     let currentPage = 1
@@ -45,7 +44,7 @@
     }
 
 </script>
-<nav class="flex items-center justify-between border-t border-gray-400 px-4 sm:px-0">
+<nav class="flex items-center justify-between border-t border-gray-400 px-12 sm:mx-20">
     <div class="-mt-px flex w-0 flex-1">
         {#if currentPage > 1}
 		<button on:click={previousPage}

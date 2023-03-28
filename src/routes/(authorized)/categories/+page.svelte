@@ -1,15 +1,12 @@
 <script lang="ts">
     import CreateButton from "../../../components/Button/CreateButton.svelte";
-    import TagButton from "../../../components/Button/TagButton.svelte";
 	import Input from "../../../components/Input.svelte";
     import Modal from '../../../components/Modal.svelte'
     import { enhance } from '$app/forms';
     import Search from "../../../components/SearchBar/Search.svelte";
     import DeleteButton from "../../../components/Button/DeleteButton.svelte";
     import EditButton from "../../../components/Button/EditButton.svelte";
-    import CrudCard from "../../../components/CrudCard.svelte";
 	import SubmitButton from "../../../components/Button/SubmitButton.svelte";
-    import UserButton from "../../../components/Button/UserButton.svelte"
 
 /** @type {import('./$types').PageData} */
 export let data:any;

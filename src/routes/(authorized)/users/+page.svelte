@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { applyAction } from "$app/forms";
-import UserButton from "../../../components/Button/UserButton.svelte";
-import * as api from '$lib/api';
 import {enhance} from '$app/forms'
 import Modal from '../../../components/Modal.svelte'
 	import EditButton from "../../../components/Button/EditButton.svelte";
@@ -132,10 +129,7 @@ const roles=[{"name":"Admin"},{"name":"User"}]
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.mobile}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department}</td>
               <td class="whitespace-nowrap py-4 flex flex-row pl-3 pr-6 text-right text-base font-medium sm:pr-0 space-x-2">
-                <!-- <form action="?/getUser" method="POST" use:enhance>
-                  <UserButton on:event={()=>showModal=true}/>
-                  <input type="hidden" name="id" value="{user.user_id}">
-                </form> -->
+
                 <form action="?/getUser" method="POST" use:enhance>
                   <EditButton on:event={()=>{showModal=true;
                   modalType="edit"

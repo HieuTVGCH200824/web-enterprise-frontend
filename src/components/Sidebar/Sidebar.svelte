@@ -6,7 +6,7 @@ import SidebarButton from "../Button/SidebarButton.svelte";
 
 import Nav from "./Nav.svelte";
 </script>
-<div class="{state?"md:w-60 max-md:w-full absolute max-md:bg-opacity-100 z-50":"min-w-[5rem] w-20 z-0 fixed max-md:w-full"} max-md:bottom-0 max-md:h-20 max-md:bg-card-indigo text-white font-sans h-screen md:sticky ease-in-out duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
+<div class="{state?"md:w-60 max-md:w-full absolute max-md:bg-opacity-100 z-50":"min-w-[5rem] w-20 z-50 fixed max-md:w-full"} max-md:bottom-0 max-md:h-20 max-md:bg-card-indigo text-white font-sans h-screen md:sticky ease-in-out duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
     <div class="{state?"space-x-8":""} max-md:hidden border-b-2 border-white/10 py-3 flex items-center justify-center sm:rounded-tl-xl">
         <p class="{state?"block":"hidden"} font-bold">Explore</p>
         <SidebarButton bind:barState={state}></SidebarButton>

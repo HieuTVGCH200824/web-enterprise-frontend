@@ -47,12 +47,12 @@ $: if (search) {
             <Search bind:value={search}></Search>
         </div>
     </div>
-    <div class="space-y-10">
+    <div class="space-y-10 pb-12">
         {#if ideas}
-        <Pagination bind:data={ideas} bind:paginatedData={paginatedIdeas}></Pagination>
             {#each paginatedIdeas as idea}
                 <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
             {/each}
+            <Pagination bind:data={ideas} bind:paginatedData={paginatedIdeas}></Pagination>
         {:else}
             <div class="flex items-center justify-center">
                 <h1 class="text-2xl font-semibold">No Ideas Found</h1>
