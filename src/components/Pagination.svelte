@@ -44,6 +44,7 @@
     }
 
 </script>
+{#if data.length > perPage}
 <nav class="flex justify-between border-t border-gray-400 px-12 sm:mx-20">
         <div class="flex-1">
             {#if currentPage > 1}
@@ -101,6 +102,6 @@
 		</button>
         {/if}
 	</div>
-
 </nav>
+{/if}
 

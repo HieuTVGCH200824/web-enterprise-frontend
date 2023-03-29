@@ -5,13 +5,15 @@ import * as api from '$lib/api.js';
 export async function load({locals}) {
     const res = await api.get('ideas-not-paging',locals.user.Token )
     const category = await api.get('categories',locals.user.Token )
+    const event = await api.get('closures',locals.user.Token )
     const body = {
         ideas: res.data,
         user: locals.user,
-        category: category.data
+        category: category.data,
+        event: event.data.map((event)=>{return {id: event._id, name: event.event_name,first_closure: event.first_closure,final_closure: event.final_closure}})
     }
-    if (res.error || category.error) {
-        return {error: res.error || category.error}
+    if (res.error || category.error||event.error) {
+        return {error: res.error || category.error||event.error}
     }
 
     return {body}
@@ -26,10 +28,12 @@ export const actions = {
         }
         const res = await api.get(`ideas/${form.id}`, locals.user.token);
         const idea = res.data
+        const event = await api.get(`closures/${idea.event_id}`, locals.user.token);
+        console.log(event.data)
         if (res.error) {
             return {error: res.error}
         }
-        return {idea : idea}
+        return {idea : idea,event: event.data}
     },
     createIdea: async ({ request, locals }) => {
 		const data = await request.formData();
@@ -46,31 +50,25 @@ export const actions = {
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
+            event_id: data.get('eventId').event_name,
 			department: locals.user.department,
 			username: locals.user.username,
-            category: data.get('category'),
+            category: data.get('category').name,
             is_anonymous: isAnonymous
 		}
-
-     
-
+    console.log(form)
         
-            const imageRes = await api.uploadImage(image);
-            const imageLink = imageRes.link
-            // @ts-ignore
-            form.image = imageLink
-        // const fileRes = await api.post('upload-file',file,)
-		const res = await api.post('ideas', form, locals.user.token);
-        // const uploadForm = {
-        //     file_name: attachment,
-        //     created_by: locals.user.username,
-        //     idea_id: form.
-        // }
-            if (res.error) {
-                return {error: res.error}
-            }else{
-                return{success: true}
-            }
+        //     const imageRes = await api.uploadImage(image);
+        //     const imageLink = imageRes.link
+        //     // @ts-ignore
+        //     form.image = imageLink
+		// const res = await api.post('ideas', form, locals.user.token);
+ 
+        //     if (res.error) {
+        //         return {error: res.error}
+        //     }else{
+        //         return{success: true}
+        //     }
 	},
     updateIdea: async ({ request, locals }) => {
         const data = await request.formData();
@@ -107,7 +105,7 @@ export const actions = {
         const data = await request.formData();
         const form = {
             _id: data.get('id')
-    }
+        }
     const res = await api.del(`ideas/${form._id}`, locals.user.token);
     if (res.error) {
         return {error: res.error}

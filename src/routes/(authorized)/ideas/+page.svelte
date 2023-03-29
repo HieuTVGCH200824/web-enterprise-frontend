@@ -88,6 +88,7 @@ function handleToggle(event){
             {/if}
             <Input label="" type="text" value="{modalType=="edit"?`${form?.idea.title}`:""}" id="title" name="title" placeholder="Title"></Input>
             <Select defaultValue="{modalType=="edit"?`${form?.idea?.category}`:"Category"}" name="category" options={data.body.category}></Select>
+            <Select defaultValue="{modalType=="edit"?`${form?.event?.event_name}`:"Event"}" name="eventId" options={data.body.event}></Select>
             <div class="w-full relative">
                 <div class="h-40">
                     <Textarea className="" name="content" label="" value="{modalType=="edit"?`${form?.idea.content}`:""}" id="" placeholder="{modalType=="edit"?`${form?.idea.content}`:`${data.body.user.first_name} ${data.body.user.last_name}, what are you thinking?`} "/>
