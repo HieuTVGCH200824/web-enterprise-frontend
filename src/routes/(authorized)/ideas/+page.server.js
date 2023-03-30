@@ -10,7 +10,7 @@ export async function load({locals}) {
         ideas: res.data,
         user: locals.user,
         category: category.data,
-        event: event.data.map((event)=>{return {id: event._id, name: event.event_name,first_closure: event.first_closure,final_closure: event.final_closure}})
+        event: event.data.map((event)=>{return {_id: event._id, name: event.event_name,first_closure: event.first_closure,final_closure: event.final_closure}})
     }
     if (res.error || category.error||event.error) {
         return {error: res.error || category.error||event.error}
@@ -50,25 +50,25 @@ export const actions = {
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
-            event_id: data.get('eventId').event_name,
-			department: locals.user.department,
-			username: locals.user.username,
-            category: data.get('category').name,
+			department_id: locals.user.department,
+			user_id: locals.user._id,
+            event_id: data.get('eventId'),
+            category_id: data.get('category'),
             is_anonymous: isAnonymous
 		}
     console.log(form)
         
-        //     const imageRes = await api.uploadImage(image);
-        //     const imageLink = imageRes.link
-        //     // @ts-ignore
-        //     form.image = imageLink
-		// const res = await api.post('ideas', form, locals.user.token);
- 
-        //     if (res.error) {
-        //         return {error: res.error}
-        //     }else{
-        //         return{success: true}
-        //     }
+            const imageRes = await api.uploadImage(image);
+            const imageLink = imageRes.link
+            // @ts-ignore
+            form.image = imageLink
+		const res = await api.post('ideas', form, locals.user.token);
+            console.log(res)
+            if (res.error) {
+                return {error: res.error}
+            }else{
+                return{success: true}
+            }
 	},
     updateIdea: async ({ request, locals }) => {
         const data = await request.formData();
@@ -78,12 +78,16 @@ export const actions = {
             _id: data.get('id'),
             title: data.get('title'),
             content: data.get('content'),
-            category: data.get('category'),
+            category_id: data.get('category'),
+            event_id: data.get('eventId'),
+            is_anonymous: data.get('isAnonymous') === "true" ? true : false,
+            department_id: locals.user.department,
+            user_id: locals.user._id,
         }
        
         
         if(image?.name == "undefined" ){
-            const res = await api.get(`users/${form._id}`, locals.user.token);
+            const res = await api.get(`ideas/${form._id}`, locals.user.token);
             const idea = res.data
             // @ts-ignore
             form.image = idea.image

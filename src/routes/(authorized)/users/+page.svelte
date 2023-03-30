@@ -52,11 +52,16 @@ $: if(form?.error){
     }
 
 
-
+$: paginatedUsers = paginatedUsers.map(obj => {
+  return {
+    ...obj,
+    department: data.departments.find((department) => department._id === obj.department)?.name,
+  };
+})
 
 let departments=data.departments
 
-const roles=[{"name":"Admin"},{"name":"User"}]
+const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
 
 
 </script>
@@ -79,10 +84,10 @@ const roles=[{"name":"Admin"},{"name":"User"}]
               </div>
               
               <Input value="{modalType=="edit"?`${form?.user.username}`:""}" name="email" id="email" label="" type="email" placeholder="Email address"></Input>              
-              <Select defaultValue="Role" content="{modalType=="edit"?`${form?.user.role}`:""}" options={roles} id="role" name="role"></Select>            
-                <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
-                <Select defaultValue="Department" content="{modalType=="edit"?`${form?.user.department}`:""}" options={departments} id="department" name="department"></Select>
-                <Input value="{modalType=="edit"?`${form?.user.password}`:""}" name="password" id="password" label="" type="password" placeholder="Password"></Input>
+              <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
+                <Select title="Role" defaultValue="{modalType=="edit"?`${form?.user.role}`:""}"  options={roles} id="role" name="role"></Select>            
+                <Select title="Department" defaultValue="{modalType=="edit"?`${form?.department?._id}`:""}" options={departments} id="department" name="department"></Select>
+                <Input required={false} value="" name="password" id="password" label="" type="password" placeholder="Password"></Input>
                 <div class="flex flex-row items-center space-x-4">
                   <h1>Images: </h1>
                   <ChooseFile
@@ -137,7 +142,8 @@ const roles=[{"name":"Admin"},{"name":"User"}]
 
                 <form action="?/getUser" method="POST" use:enhance>
                   <EditButton on:event={()=>{showModal=true;
-                  modalType="edit"
+                  modalType="edit";
+                  
                   }}/>
                   <input type="hidden" name="id" value="{user._id}">
                 </form>

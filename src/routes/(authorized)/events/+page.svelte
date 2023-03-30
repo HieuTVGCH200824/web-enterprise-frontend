@@ -90,7 +90,7 @@ $: if(events){
         <Search bind:value={search}></Search>
     </div>
     <CreateButton on:event={()=>{showModal=true}}>Create event</CreateButton>
-    {#if events.length > 0}
+    {#if events?.length > 0}
     <div class="flow-root">
         <div class="-my-2 mx-6lg:-mx-24">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

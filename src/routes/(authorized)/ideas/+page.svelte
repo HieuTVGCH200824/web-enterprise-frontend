@@ -49,10 +49,10 @@ $: if(form?.success){
 
 let paginatedIdeas=ideas;
 
-$: if (search) {
 
+$: if (search) {
     ideas = data.body.ideas.filter((obj) => {
-            return obj.username == data.body.user.username
+            return obj.user_id == data.body.user._id
         });
     ideas = ideas.filter((obj) => {
         return (
@@ -62,13 +62,14 @@ $: if (search) {
     });
     } else {
         ideas = data.body.ideas.filter((obj) => {
-            return obj.username == data.body.user.username
+            return obj.user_id == data.body.user._id
         });
     }
 let anonymousIdea : boolean = false;
 function handleToggle(event){
     anonymousIdea = event.detail;
 }
+
 </script>
 
 
@@ -87,8 +88,8 @@ function handleToggle(event){
             <input type="hidden" value={form?.idea._id} id="id" name="id"/>
             {/if}
             <Input label="" type="text" value="{modalType=="edit"?`${form?.idea.title}`:""}" id="title" name="title" placeholder="Title"></Input>
-            <Select defaultValue="{modalType=="edit"?`${form?.idea?.category}`:"Category"}" name="category" options={data.body.category}></Select>
-            <Select defaultValue="{modalType=="edit"?`${form?.event?.event_name}`:"Event"}" name="eventId" options={data.body.event}></Select>
+            <Select title="Category" defaultValue="{modalType=="edit"?`${form?.idea.category_id}`:""}" name="category" options={data.body.category}></Select>            
+            <Select title="Event" defaultValue="{modalType=="edit"?`${form?.idea.event_id}`:""}" name="eventId" options={data.body.event}></Select>
             <div class="w-full relative">
                 <div class="h-40">
                     <Textarea className="" name="content" label="" value="{modalType=="edit"?`${form?.idea.content}`:""}" id="" placeholder="{modalType=="edit"?`${form?.idea.content}`:`${data.body.user.first_name} ${data.body.user.last_name}, what are you thinking?`} "/>
@@ -141,7 +142,7 @@ function handleToggle(event){
             {#each paginatedIdeas as idea}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
                     <a href="/ideas/{idea._id}" class="h-full w-full">
-                    <IdeaCard idea={idea}></IdeaCard>
+                    <IdeaCard idea={idea} categories={data.body.category} events={data.body.event}></IdeaCard>
                 </a>
                     <div class="self-start pl-5 pt-4 flex flex-row space-x-3">
                         <form action="?/getIdea" method="POST" use:enhance>

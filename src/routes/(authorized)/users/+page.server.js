@@ -22,10 +22,11 @@ export const actions = {
 	getUser: async ({ request,locals }) => {
 		const data = await request.formData();
         const {user} = await api.get(`users/${data.get('id')}`,locals.user.Token)
-        if (user.error) {
-            return {error: user.error}
+        const department = await api.get(`departments/${user.department}`,locals.user.Token)
+        if (user.error||department.error) {
+            return {error: user.error|| department.error}
         }
-        return{user}
+        return{user,department: department.data}
 	},
     editUser: async ({ request,locals }) => {
 		const data = await request.formData();
@@ -40,7 +41,6 @@ export const actions = {
             role: data.get('role'),
             department: data.get('department'),
         }
-    
         if(image?.name == "undefined" ){
             const res = await api.get(`users/${form._id}`, locals.user.token);
             const user= res.user
@@ -71,6 +71,18 @@ export const actions = {
             const data = await request.formData();
             const imageRes = await api.uploadImage(data.get('image'))
             const image = imageRes.link
+            const form = {
+                username: data.get('email'),
+                first_name: data.get('first_name'),
+                last_name: data.get('last_name'),
+                password: data.get('password'),
+                mobile: data.get('mobile'),
+                role: data.get('role'),
+                department: data.get('department'),
+                image: image
+            }
+
+            console.log(form)
             const body = await api.post('users/signup', {
                 username: data.get('email'),
                 first_name: data.get('first_name'),
