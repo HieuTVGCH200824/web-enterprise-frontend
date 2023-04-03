@@ -3,9 +3,9 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
-    const res = await api.get('ideas-not-paging',locals.user.Token )
-    const category = await api.get('categories',locals.user.Token )
-    const event = await api.get('closures',locals.user.Token )
+    const res = await api.get('ideas-not-paging',locals.user.token )
+    const category = await api.get('categories',locals.user.token )
+    const event = await api.get('closures',locals.user.token )
     const body = {
         ideas: res.data,
         user: locals.user,
@@ -37,33 +37,38 @@ export const actions = {
     },
     createIdea: async ({ request, locals }) => {
 		const data = await request.formData();
-        const imageForm = new FormData();
         const image = await data.get('image')
         const attachment =  data.get('attachment')
 		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
-        imageForm.append('image', image)
 
         if(data.get('term') !="agree"){
             return {error: "You must agree to the terms and conditions"}
         }
 
+      
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
-			department_id: locals.user.department,
+			department_id: locals.user.department_id,
 			user_id: locals.user._id,
             event_id: data.get('eventId'),
             category_id: data.get('category'),
             is_anonymous: isAnonymous
 		}
-    console.log(form)
-        
+            console.log(form)
+
             const imageRes = await api.uploadImage(image);
             const imageLink = imageRes.link
             // @ts-ignore
             form.image = imageLink
-		const res = await api.post('ideas', form, locals.user.token);
+            const res = await api.post('ideas', form, locals.user.token);
+            const uploadForm = {
+                idea_id: await res.data._id,
+                created_by: await locals.user._id,
+            }
+            const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.token)
             console.log(res)
+            console.log(resAttachtment)
             if (res.error) {
                 return {error: res.error}
             }else{

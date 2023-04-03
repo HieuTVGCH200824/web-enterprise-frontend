@@ -69,3 +69,18 @@ export async function uploadImage(image) {
 		return imageData.data
 	}
 
+export async function uploadFile(attachment, idea_id, created_by, token) {
+	const fileForm = new FormData();
+	fileForm.append('file', attachment)
+	const fileRes = await fetch(`${base}/upload-file?idea_id=${idea_id}&created_by=${created_by}`,{
+		method: 'POST',
+		headers: {
+			'Authorization': `Token ${token}`,
+		},
+		body:fileForm
+	})
+	console.log(fileRes)
+	const fileData = await fileRes.json()
+	return fileData.data
+}
+

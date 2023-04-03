@@ -39,7 +39,7 @@ export const actions = {
             password: data.get('password'),
             mobile: data.get('mobile'),
             role: data.get('role'),
-            department: data.get('department'),
+            department_id: data.get('department'),
         }
         if(image?.name == "undefined" ){
             const res = await api.get(`users/${form._id}`, locals.user.token);
@@ -78,7 +78,7 @@ export const actions = {
                 password: data.get('password'),
                 mobile: data.get('mobile'),
                 role: data.get('role'),
-                department: data.get('department'),
+                department_id: data.get('department'),
                 image: image
             }
 
@@ -90,7 +90,7 @@ export const actions = {
                 password: data.get('password'),
                 mobile: data.get('mobile'),
                 role: data.get('role'),
-                department: data.get('department'),
+                department_id: data.get('department'),
                 image: image
             });
             if (body.error) {
