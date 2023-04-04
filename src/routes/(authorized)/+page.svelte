@@ -64,7 +64,7 @@ let selectedSort = "Sort"
                 </button>
                 <div class="absolute ease-in-out duration-700 top-8 {toggleSort?"block":"hidden"}">
                     <div class="flex flex-col justify-center items-center bg-gray-500 p-2 rounded">
-                        <a href="?sort=" class="{selectedSort === ""?"text-violet-400":"text-gray-200"}" on:click={()=>{selectedSort = "";toggleSort=false}}>Sort</a>
+                        <a href="?sort=" class="{selectedSort === "Sort"?"text-violet-400":"text-gray-200"}" on:click={()=>{selectedSort = "";toggleSort=false}}>Sort</a>
                         <a href="?sort=most-viewed-ideas" class="{selectedSort === "Most views"?"text-violet-400":"text-gray-200"}" on:click={()=>{selectedSort = "Most views";toggleSort=false}}>Most views</a>
                         <a href="?sort=most-upvote-ideas" class="{selectedSort === "Up votes"?"text-violet-400":"text-gray-200"}" on:click={()=>{selectedSort = "Up votes";toggleSort=false}}>Up votes</a>
                     </div>
