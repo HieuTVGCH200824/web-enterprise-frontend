@@ -7,9 +7,6 @@ import {enhance} from "$app/forms";
 	import EditButton from "./Button/EditButton.svelte";
 	import DeleteButton from "./Button/DeleteButton.svelte";
 	import ToggleButton from "./Button/ToggleButton.svelte";
-    import * as api from '$lib/api.js';
-	import { onMount } from "svelte";
-	import { comment } from "postcss";
 	import ChevronButton from "./Button/ChevronButton.svelte";
 
 
@@ -18,15 +15,9 @@ export let comments : any;
 export let user :any;
 export let votes:any;
 export let getComment:any;
+export let allUser : any ;
 
 
-let ideaOwner : any = null;
-
-onMount(()=>{
-    async ()=>{
-    ideaOwner = await api.get(`user/${idea.username}`);
-}
-})
 
 let anonymousComment : boolean = false;
 
@@ -39,6 +30,7 @@ function handleToggle(event){
 }
 
 $: commentCount = comments?.filter((comment) => comment.idea_id == idea._id).length;
+$: ideaOwner = allUser?.find((user) => user._id == idea.user_id);
 
 
 $: postVotes = votes?.find(
@@ -62,18 +54,21 @@ $: postVotes = votes?.find(
                 <div class="flex flex-row items-center space-x-3">
                     <img src={ideaOwner?.image} alt="" class="w-10 h-10 rounded-full">
                     <span>
-                        {idea.username}
+                        {ideaOwner.username}
                     </span>
                 </div>
                 {/if}
             </h2>
             <h4 class="text-xs">
-                {idea.created_at}
+                Created: {idea.created_at}
+            </h4>
+            <h4 class="text-xs">
+                Updated: {idea.updated_at}
             </h4>
         </div>
         <div>
             <a href="/ideas/{idea._id}" class="hover:opacity-50 duration-300 hover:text-violet-400">
-                <h1 class="text-xl">{idea.title}</h1>
+                <h1 class="text-xl">Title: {idea.title}</h1>
             </a>
         </div>
         <div>

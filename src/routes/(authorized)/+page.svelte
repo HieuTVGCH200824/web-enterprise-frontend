@@ -41,7 +41,6 @@ $: if (search) {
     }
 
 
-
 </script>
 <div class="h-full w-full text-white"><div class="mx-10">
     {#if data.body.ideas}
@@ -53,7 +52,7 @@ $: if (search) {
     <div class="space-y-10 pb-12">
         {#if ideas.length >0}
             {#each paginatedIdeas as idea}
-                <IdeaPost votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
+                <IdeaPost allUser={data.body.allUser} votes={data.body.votes} user={data.body.user} getComment={getComment} idea={idea} comments={data.body.comments}></IdeaPost>
             {/each}
             <Pagination bind:data={ideas} bind:paginatedData={paginatedIdeas}></Pagination>
         {:else}

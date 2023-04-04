@@ -5,14 +5,16 @@ export async function load({ locals }) {
 	const res = await api.get('ideas-not-paging', locals.user.token);
 	const comments = await api.get('comments', locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
+	const allUser = await api.get('users', locals.user.token);
 	const body = {
 		ideas: res.data,
 		user: locals.user,	
 		comments: comments.data,
-		votes: votes.data
+		votes: votes.data,
+		allUser: allUser.users
 	};
-	if (res.error || comments.error|| votes.error) {
-		return { error: res.error || comments.error|| votes.error};
+	if (res.error || comments.error|| votes.error || allUser.error) {
+		return { error: res.error || comments.error|| votes.error || allUser.error};
 	}
 	return { body };
 }
