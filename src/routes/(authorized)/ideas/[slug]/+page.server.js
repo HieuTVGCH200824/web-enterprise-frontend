@@ -5,12 +5,14 @@ export async function load({ params, locals }) {
 	const res = await api.get(`ideas/${params.slug}`, locals.user.token);
 	const comments = await api.get(`comments/`, locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
-	if(res.error || comments.error|| votes.error){
-		return {error: res.error || comments.error|| votes.error};
+	const allUser = await api.get(`users`, locals.user.token);
+	const documents = await api.get(`documents`, locals.user.token);
+	if(res.error || comments.error|| votes.error || allUser.error || documents.error){
+		return {error: res.error || comments.error|| votes.error || allUser.error || documents.error};
 	}
     const idea = await res.data
 	const user = await locals.user
-	return { idea :idea, user:user, comments: comments.data, votes: votes.data };
+	return { idea :idea, user:user, comments: comments.data, votes: votes.data, allUser: allUser.users , documents: documents.data };
 }
 
 /** @type {import('./$types').Actions}*/

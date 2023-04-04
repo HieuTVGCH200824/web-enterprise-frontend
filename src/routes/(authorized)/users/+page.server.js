@@ -82,7 +82,6 @@ export const actions = {
                 image: image
             }
 
-            console.log(form)
             const body = await api.post('users/signup', {
                 username: data.get('email'),
                 first_name: data.get('first_name'),

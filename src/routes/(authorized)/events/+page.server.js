@@ -22,9 +22,7 @@ export const actions = {
         }
         form.first_closure = new Date(form.first_closure).toISOString()
         form.final_closure = new Date(form.final_closure).toISOString()
-        console.log(form)
         const body = await api.post(`closures`,form,locals.user.Token );
-        console.log(body)
         if (body.error) {
             return {error: body.error}
         }else{
@@ -44,7 +42,6 @@ export const actions = {
     },
     async editEvent({request, locals}) {
         const data = await request.formData();
-        console.log(data.get('first_closure'))
         const form = {
             _id: data.get('id'),
             event_name: data.get('event_name'),
@@ -54,7 +51,6 @@ export const actions = {
         form.first_closure = new Date(form.first_closure).toISOString()
         form.final_closure = new Date(form.final_closure).toISOString()
         const res = await api.put(`closures/${form._id}`,form,locals.user.Token );
-        console.log(res)
         if (res.error) {
             return {error: res.error}
         }else{
@@ -64,9 +60,7 @@ export const actions = {
     async deleteEvent({request, locals}) {
         const data = await request.formData();
         const form = data.get('id')
-        console.log(form)
         const res = await api.del(`closures/${form}`,locals.user.Token );
-        console.log(locals.user.token)
         if (res.error) {
             return {error: res.error}
         }else{

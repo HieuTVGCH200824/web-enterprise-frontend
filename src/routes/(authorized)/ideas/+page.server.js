@@ -29,7 +29,6 @@ export const actions = {
         const res = await api.get(`ideas/${form.id}`, locals.user.token);
         const idea = res.data
         const event = await api.get(`closures/${idea.event_id}`, locals.user.token);
-        console.log(event.data)
         if (res.error) {
             return {error: res.error}
         }
@@ -45,7 +44,6 @@ export const actions = {
             return {error: "You must agree to the terms and conditions"}
         }
 
-      
 		const form = {
 			title: data.get('title'),
 			content: data.get('content'),
@@ -55,20 +53,33 @@ export const actions = {
             category_id: data.get('category'),
             is_anonymous: isAnonymous
 		}
-            console.log(form)
 
             const imageRes = await api.uploadImage(image);
             const imageLink = imageRes.link
             // @ts-ignore
             form.image = imageLink
             const res = await api.post('ideas', form, locals.user.token);
-            const uploadForm = {
-                idea_id: await res.data._id,
-                created_by: await locals.user._id,
-            }
-            const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.token)
             console.log(res)
-            console.log(resAttachtment)
+            const uploadForm = {
+                idea_id:  null,
+                created_by: locals.user._id,
+            }
+
+            uploadForm.idea_id = await res.data?._id
+
+            const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.token)
+
+            // @ts-ignore
+            form.file_name = await resAttachtment._id
+
+            const postId = await res.data._id
+            
+            const editPost = await api.put(`ideas/${postId}`,form, locals.user.token);
+
+            console.log(res._id)
+            console.log(editPost)
+            
+
             if (res.error) {
                 return {error: res.error}
             }else{
@@ -79,6 +90,7 @@ export const actions = {
         const data = await request.formData();
         const imageForm = new FormData();
         const image = await data.get('image')
+        const attachment =  data.get('attachment')
         let form = {
             _id: data.get('id'),
             title: data.get('title'),
@@ -89,11 +101,10 @@ export const actions = {
             department_id: locals.user.department,
             user_id: locals.user._id,
         }
-       
         
+        const resIdea = await api.get(`ideas/${form._id}`, locals.user.token);
         if(image?.name == "undefined" ){
-            const res = await api.get(`ideas/${form._id}`, locals.user.token);
-            const idea = res.data
+            const idea = resIdea.data
             // @ts-ignore
             form.image = idea.image
         }else{
@@ -101,6 +112,17 @@ export const actions = {
             const imageLink = imageRes.link
             // @ts-ignore
             form.image = imageLink
+        }
+
+        if(attachment?.name == "undefined" ){
+            const idea = resIdea.data 
+            // @ts-ignore
+            form.file_name = idea.file_name
+        }else{
+            const fileRes = await api.uploadFile(attachment,form._id,locals.user._id, locals.user.token);
+            const deleteRes = await api.del(`documents/${resIdea.file_name}`, locals.user.token)
+            // @ts-ignore
+            form.file_name = fileRes._id
         }
         
     const res = await api.put(`ideas/${form._id}`, form, locals.user.token);

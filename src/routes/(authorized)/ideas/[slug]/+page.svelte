@@ -32,5 +32,5 @@
 </script>
 
 <div class="h-full">
-	<IdeaPost votes={data.votes} user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
+	<IdeaPost files={data.documents} allUser={data.allUser} votes={data.votes} user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
 </div>

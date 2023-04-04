@@ -55,13 +55,15 @@ $: if(form?.error){
 $: paginatedUsers = paginatedUsers.map(obj => {
   return {
     ...obj,
-    department: data.departments.find((department) => department._id === obj.department)?.name,
+    department_id : obj.department_id,
+    department: data.departments.find((department) => department._id === obj.department_id)?.name,
   };
 })
 
 let departments=data.departments
 
 const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
+
 
 
 </script>
@@ -86,7 +88,7 @@ const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
               <Input value="{modalType=="edit"?`${form?.user.username}`:""}" name="email" id="email" label="" type="email" placeholder="Email address"></Input>              
               <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
                 <Select title="Role" defaultValue="{modalType=="edit"?`${form?.user.role}`:""}"  options={roles} id="role" name="role"></Select>            
-                <Select title="Department" defaultValue="{modalType=="edit"?`${form?.department?._id}`:""}" options={departments} id="department" name="department"></Select>
+                <Select title="Department" defaultValue="{modalType=="edit"?`${form?.user?.department_id}`:""}" options={departments} id="department" name="department"></Select>
                 <Input required={false} value="" name="password" id="password" label="" type="password" placeholder="Password"></Input>
                 <div class="flex flex-row items-center space-x-4">
                   <h1>Images: </h1>
@@ -137,11 +139,7 @@ const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
               <td class="whitespace-nowrap py-4 pl-6 pr-3 text-base font-medium text-white sm:pl-0 flex flex-row items-center space-x-2"><img src="{user.image}" class="w-10 h-10 rounded-3xl" alt=""><p>{user.first_name} {user.last_name} {user.username}</p> </td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.role}</td>
               <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.mobile}</td>
-              {#each departments as department}
-              {#if user.department_id == department._id}
-              <td class="whitespace-nowrap py-4 px-3 text-base text-white">{department.name}</td>
-              {/if}              
-              {/each}
+              <td class="whitespace-nowrap py-4 px-3 text-base text-white">{user.department}</td>
               <td class="whitespace-nowrap py-4 flex flex-row pl-3 pr-6 text-right text-base font-medium sm:pr-0 space-x-2">
 
                 <form action="?/getUser" method="POST" use:enhance>

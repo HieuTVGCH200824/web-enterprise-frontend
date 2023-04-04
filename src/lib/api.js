@@ -79,8 +79,7 @@ export async function uploadFile(attachment, idea_id, created_by, token) {
 		},
 		body:fileForm
 	})
-	console.log(fileRes)
 	const fileData = await fileRes.json()
-	return fileData.data
+	return fileData.document
 }
 

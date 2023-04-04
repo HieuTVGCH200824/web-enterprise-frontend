@@ -4,10 +4,10 @@ import DislikeButton from "./Button/DislikeButton.svelte";
 import CommentButton from "./Button/CommentButton.svelte";
 import Textarea from "./Textarea.svelte";
 import {enhance} from "$app/forms";
-	import EditButton from "./Button/EditButton.svelte";
-	import DeleteButton from "./Button/DeleteButton.svelte";
-	import ToggleButton from "./Button/ToggleButton.svelte";
-	import ChevronButton from "./Button/ChevronButton.svelte";
+import EditButton from "./Button/EditButton.svelte";
+import DeleteButton from "./Button/DeleteButton.svelte";
+import ToggleButton from "./Button/ToggleButton.svelte";
+import ChevronButton from "./Button/ChevronButton.svelte";
 
 
 export let idea : any;
@@ -16,6 +16,7 @@ export let user :any;
 export let votes:any;
 export let getComment:any;
 export let allUser : any ;
+export let files: any;
 
 
 
@@ -31,7 +32,7 @@ function handleToggle(event){
 
 $: commentCount = comments?.filter((comment) => comment.idea_id == idea._id).length;
 $: ideaOwner = allUser?.find((user) => user._id == idea.user_id);
-
+$: documents = files?.find((file) => file.idea_id == idea._id)
 
 $: postVotes = votes?.find(
         (vote) => vote.idea_id == idea._id 
@@ -74,11 +75,16 @@ $: postVotes = votes?.find(
         <div>
             <p class="text-justify">{idea.content}</p>
         </div>
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center ">
             <a href="{idea.image}" target="_blank" class=" hover:opacity-50 duration-300">
                 <img src={idea.image} alt="" class="max-h-[200px]">
             </a>
         </div>
+        <h1>Attachment:
+            <a class="hover:text-violet-400" href="http://localhost:8080/export-documents-to-zip?files=file/{documents?.file_name}">
+                {documents?.file_name}
+            </a>
+        </h1>
     </div>
     <div class="w-full h-fit flex items-center space-x-3 bg-[#393D5D] drop-shadow-[#fff] shadow-white pb-2 pt-4  px-10 z-50">
             <form use:enhance method="POST" action="?/upVote" class="flex items-center">
