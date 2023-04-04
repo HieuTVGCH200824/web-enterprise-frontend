@@ -54,7 +54,7 @@ $: postVotes = votes?.find(
                 <div class="flex flex-row items-center space-x-3">
                     <img src={ideaOwner?.image} alt="" class="w-10 h-10 rounded-full">
                     <span>
-                        {ideaOwner.username}
+                        {ideaOwner?.username}
                     </span>
                 </div>
                 {/if}
