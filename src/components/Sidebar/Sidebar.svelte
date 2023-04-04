@@ -1,7 +1,7 @@
 <script lang="ts">
     import LogoutButton from "../Button/LogoutButton.svelte";
 import SidebarButton from "../Button/SidebarButton.svelte";
-    let state: boolean = false;
+    let state: boolean = true;
 
 
 import Nav from "./Nav.svelte";

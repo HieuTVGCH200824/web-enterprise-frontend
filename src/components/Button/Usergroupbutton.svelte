@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
-    let state : boolean = false;
+    let state : boolean = true;
 
     function handleEvent() {
         dispatch("event");

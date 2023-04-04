@@ -1,8 +1,9 @@
 import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ locals }) {
-	const res = await api.get('ideas-not-paging', locals.user.token);
+export async function load({ locals,url }) {
+	const sortParams = url.searchParams.get('sort') || 'ideas-not-paging';
+	const res = await api.get(sortParams, locals.user.token);
 	const comments = await api.get('comments', locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	const documents = await api.get('documents', locals.user.token);

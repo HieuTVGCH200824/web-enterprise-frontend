@@ -1,14 +1,13 @@
 <script lang="ts">
 	import Usergroupbutton from "../Button/Usergroupbutton.svelte";
     import { createEventDispatcher } from "svelte";
-    let barState :boolean=false;
+    let barState :boolean=true;
     export let user : any ;
     const dispatch = createEventDispatcher();
     function handleEvent() {
         dispatch("event");
     }
 </script>
-
 <div class="{barState?"w-96 h-full md:rounded-tr-xl border-l-2 border-white/10 z-50 max-md:w-full max-md:absolute":"md:border-y-2 md:border-l-2 md:border-white/20 z-0 md:rounded-tl-full md:rounded-b-full w-16 h-16 max-md:h-10 max-md:w-10 flex justify-center items-center absolute bottom-0 max-md:top-0 sm:bottom-10 right-0"} duration-700 ease-in-out bg-card-indigo md:bg-card-indigo/50">
     <div class="{barState?"border-b-2 py-3 border-white/10 w-full flex justify-center items-center":""}">
         <Usergroupbutton on:event={()=>{

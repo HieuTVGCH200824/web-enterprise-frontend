@@ -98,7 +98,7 @@ export const actions = {
             category_id: data.get('category'),
             event_id: data.get('eventId'),
             is_anonymous: data.get('isAnonymous') === "true" ? true : false,
-            department_id: locals.user.department,
+            department_id: locals.user.department_id,
             user_id: locals.user._id,
         }
         
@@ -119,10 +119,12 @@ export const actions = {
             // @ts-ignore
             form.file_name = idea.file_name
         }else{
-            const fileRes = await api.uploadFile(attachment,form._id,locals.user._id, locals.user.token);
             const deleteRes = await api.del(`documents/${resIdea.file_name}`, locals.user.token)
-            // @ts-ignore
-            form.file_name = fileRes._id
+            if(deleteRes.status == 1 ){
+                const fileRes = await api.uploadFile(attachment,form._id,locals.user._id, locals.user.token);
+                // @ts-ignore
+                form.file_name = fileRes._id
+            }
         }
         
     const res = await api.put(`ideas/${form._id}`, form, locals.user.token);
