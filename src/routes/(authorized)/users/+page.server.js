@@ -42,6 +42,10 @@ export const actions = {
             role: data.get('role'),
             department_id: data.get('department'),
         }
+
+        if(form.role == "Admin" || form.role == "Manager"){
+            form.department_id = null
+        }
         if(image?.name == "undefined" ){
             const res = await api.get(`users/${form._id}`, locals.user.token);
             const user= res.user
@@ -82,17 +86,11 @@ export const actions = {
                 department_id: data.get('department'),
                 image: image
             }
+            if(form.role == "Admin" || form.role == "Manager"){
+                form.department_id = null
+            }
 
-            const body = await api.post('users/signup', {
-                username: data.get('email'),
-                first_name: data.get('first_name'),
-                last_name: data.get('last_name'),
-                password: data.get('password'),
-                mobile: data.get('mobile'),
-                role: data.get('role'),
-                department_id: data.get('department'),
-                image: image
-            });
+            const body = await api.post('users/signup', form);
             if (body.error) {
                 return {error: body.error}
             }else{

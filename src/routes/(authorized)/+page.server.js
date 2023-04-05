@@ -7,6 +7,8 @@ export async function load({ locals,url }) {
 	const comments = await api.get('comments', locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	const documents = await api.get('documents', locals.user.token);
+	const categories = await api.get('categories', locals.user.token);
+	const departments = await api.get('departments', locals.user.token);
 	const allUser = await api.get('users', locals.user.token);
 	const body = {
 		ideas: res.data,
@@ -14,7 +16,9 @@ export async function load({ locals,url }) {
 		comments: comments.data,
 		votes: votes.data,
 		documents: documents.data,
-		allUser: allUser.users
+		allUser: allUser.users,
+		categories: categories.data,
+		departments: departments.data,
 	};
 	if (res.error || comments.error|| votes.error || allUser.error) {
 		return { error: res.error || comments.error|| votes.error || allUser.error};

@@ -17,6 +17,8 @@ export let votes:any;
 export let getComment:any;
 export let allUser : any ;
 export let files: any;
+export let categories: any;
+export let departments: any;
 
 $: if(idea){
     idea = {
@@ -40,6 +42,8 @@ function handleToggle(event){
 $: commentCount = comments?.filter((comment) => comment.idea_id == idea._id).length;
 $: ideaOwner = allUser?.find((user) => user._id == idea.user_id);
 $: documents = files?.find((file) => file.idea_id == idea._id)
+$: category= categories?.find((c) => c._id == idea.category_id)
+$: department= departments?.find((d) => d._id == idea.department_id)
 
 $: postVotes = votes?.find(
         (vote) => vote.idea_id == idea._id 
@@ -78,6 +82,12 @@ $: postVotes = votes?.find(
             <a href="/ideas/{idea._id}" class="hover:opacity-50 duration-300 hover:text-violet-400">
                 <h1 class="text-xl">Title: {idea.title}</h1>
             </a>
+        </div>
+        <div>
+            <h1 class="text-xl">Category: {category?.name}</h1>
+        </div>
+        <div>
+            <h1 class="text-xl">Department: {department?.name}</h1>
         </div>
         <div>
             <p class="text-justify">{idea.content}</p>

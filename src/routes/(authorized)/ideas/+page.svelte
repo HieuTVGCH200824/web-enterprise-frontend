@@ -70,6 +70,16 @@ function handleToggle(event){
     anonymousIdea = event.detail;
 }
 
+let events = data.body.event;
+
+let currentDate = new Date()
+$: if(events){
+    events = events.filter((obj) => {
+        return new Date(obj.final_closure) > currentDate
+    });
+}
+
+
 </script>
 
 
@@ -89,7 +99,7 @@ function handleToggle(event){
             {/if}
             <Input label="" type="text" value="{modalType=="edit"?`${form?.idea.title}`:""}" id="title" name="title" placeholder="Title"></Input>
             <Select title="Category" defaultValue="{modalType=="edit"?`${form?.idea.category_id}`:""}" name="category" options={data.body.category}></Select>            
-            <Select title="Event" defaultValue="{modalType=="edit"?`${form?.idea.event_id}`:""}" name="eventId" options={data.body.event}></Select>
+            <Select title="Event" defaultValue="{modalType=="edit"?`${form?.idea.event_id}`:""}" name="eventId" options={events}></Select>
             <div class="w-full relative">
                 <div class="h-40">
                     <Textarea className="" name="content" label="" value="{modalType=="edit"?`${form?.idea.content}`:""}" id="" placeholder="{modalType=="edit"?`${form?.idea.content}`:`${data.body.user.first_name} ${data.body.user.last_name}, what are you thinking?`} "/>
