@@ -3,8 +3,9 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
-
-    const {users} = await api.get('users',locals.user.Token )
+	if (locals.user.role !== "Admin") throw redirect(302, `/`);
+     
+    const {users} = await api.get('users',locals.user.Token );
     const resDepartment= await api.get('departments',locals.user.Token )
     const departments = resDepartment.data
     if (users.error || resDepartment.error) {

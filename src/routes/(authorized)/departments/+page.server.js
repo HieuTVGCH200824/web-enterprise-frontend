@@ -3,6 +3,7 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
+    if (locals.user.role !== "Manager") throw redirect(302, `/`);
 
     const res = await api.get('departments',locals.user.Token )
     if(res.error){

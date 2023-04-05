@@ -3,6 +3,7 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
+    if (locals.user.role !== "Staff") throw redirect(302, `/`);
     const res = await api.get('ideas-not-paging',locals.user.token )
     const category = await api.get('categories',locals.user.token )
     const event = await api.get('closures',locals.user.token )
@@ -59,7 +60,6 @@ export const actions = {
             // @ts-ignore
             form.image = imageLink
             const res = await api.post('ideas', form, locals.user.token);
-            console.log(res)
             const uploadForm = {
                 idea_id:  null,
                 created_by: locals.user._id,
@@ -76,8 +76,7 @@ export const actions = {
             
             const editPost = await api.put(`ideas/${postId}`,form, locals.user.token);
 
-            console.log(res._id)
-            console.log(editPost)
+
             
 
             if (res.error) {

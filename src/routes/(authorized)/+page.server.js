@@ -7,7 +7,6 @@ export async function load({ locals,url }) {
 	const comments = await api.get('comments', locals.user.token);
 	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
 	const documents = await api.get('documents', locals.user.token);
-	console.log(documents)
 	const allUser = await api.get('users', locals.user.token);
 	const body = {
 		ideas: res.data,

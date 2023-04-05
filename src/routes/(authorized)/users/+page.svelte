@@ -1,6 +1,6 @@
 <script lang="ts">
-import {enhance} from '$app/forms'
-import Modal from '../../../components/Modal.svelte'
+  import {enhance} from '$app/forms'
+  import Modal from '../../../components/Modal.svelte'
 	import EditButton from "../../../components/Button/EditButton.svelte";
 	import DeleteButton from "../../../components/Button/DeleteButton.svelte";
 	import CreateButton from "../../../components/Button/CreateButton.svelte";
@@ -62,7 +62,12 @@ $: paginatedUsers = paginatedUsers.map(obj => {
 
 let departments=data.departments
 
-const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
+const roles=[
+  {_id:"Admin",name:"Admin"},
+  {_id:"Staff",name:"Staff"},
+  {_id:"Coordinator",name:"Coordinator"},
+  {_id:"Manager",name:"Manager"}
+]
 
 
 
@@ -89,7 +94,7 @@ const roles=[{_id:"Admin",name:"Admin"},{_id:"User",name:"User"}]
               <Input value="{modalType=="edit"?`${form?.user.mobile}`:""}" name="mobile" id="mobile" label="" type="text" placeholder="Phone"></Input>
                 <Select title="Role" defaultValue="{modalType=="edit"?`${form?.user.role}`:""}"  options={roles} id="role" name="role"></Select>            
                 <Select title="Department" defaultValue="{modalType=="edit"?`${form?.user?.department_id}`:""}" options={departments} id="department" name="department"></Select>
-                <Input required={false} value="" name="password" id="password" label="" type="password" placeholder="Password"></Input>
+                <Input  value="" name="password" id="password" label="" type="password" placeholder="Password"></Input>
                 <div class="flex flex-row items-center space-x-4">
                   <h1>Images: </h1>
                   <ChooseFile

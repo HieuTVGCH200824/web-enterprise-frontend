@@ -18,6 +18,13 @@ export let getComment:any;
 export let allUser : any ;
 export let files: any;
 
+$: if(idea){
+    idea = {
+        ... idea,
+        created_at : new Date(idea.created_at).toLocaleString(),
+        updated_at : new Date(idea.updated_at).toLocaleString(),
+    }
+}
 
 
 let anonymousComment : boolean = false;

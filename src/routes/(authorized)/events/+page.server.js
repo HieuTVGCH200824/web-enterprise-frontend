@@ -1,7 +1,10 @@
 import * as api from '$lib/api.js';
+import { fail, redirect } from '@sveltejs/kit';
+
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
+	if (locals.user.role !== "Admin") throw redirect(302, `/`);
 
     const res = await api.get('closures',locals.user.Token )
     if(res.error){
