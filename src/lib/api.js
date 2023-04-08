@@ -16,8 +16,6 @@ async function send({ method, path, data, token }) {
 		}
 		const res = await fetch(`${base}/${path}`, opts);
 		const body = await res.json();
-		
-		
 		return body;
 	}catch(error){
 		console.log(error)
