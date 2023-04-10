@@ -1,5 +1,6 @@
 <script lang="ts">
-    import Chart from "../../../components/Chart.svelte";
+    import VoteChart from "../../../components/Chart/VoteChart.svelte";
+    import WeeklyChart from "../../../components/Chart/WeeklyChart.svelte";
 
 
     /** @type {import('./$types').PageData} */
@@ -9,7 +10,9 @@ export let data:any;
 export let form:any;
 </script>
 
-<div class="bg-white rounded-3xl p-10 w-1/2 h-3/4">
-    <Chart user={data.user} ></Chart>
+<div class="bg-white rounded-3xl p-8 w-1/2 min-w-[30rem] h-3/4">
+    <VoteChart user={data.user} ></VoteChart>
 </div>
-<!-- ideas={data.highVotes} -->
+<div class="bg-white rounded-3xl p-8 w-1/2 min-w-[30rem] h-3/4">
+    <WeeklyChart user={data.user} ></WeeklyChart>
+</div>
