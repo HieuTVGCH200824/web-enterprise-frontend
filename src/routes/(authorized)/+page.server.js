@@ -3,13 +3,13 @@ import * as api from '$lib/api.js';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals,url }) {
 	const sortParams = url.searchParams.get('sort') || 'ideas-not-paging';
-	const res = await api.get(sortParams, locals.user.token);
-	const comments = await api.get('comments', locals.user.token);
-	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.token);
-	const documents = await api.get('documents', locals.user.token);
-	const categories = await api.get('categories', locals.user.token);
-	const departments = await api.get('departments', locals.user.token);
-	const allUser = await api.get('users', locals.user.token);
+	const res = await api.get(sortParams, locals.user.Token);
+	const comments = await api.get('comments', locals.user.Token);
+	const votes = await api.get(`get-uservote-by-username/${locals.user.username}`, locals.user.Token);
+	const documents = await api.get('documents', locals.user.Token);
+	const categories = await api.get('categories', locals.user.Token);
+	const departments = await api.get('departments', locals.user.Token);
+	const allUser = await api.get('users', locals.user.Token);
 	const body = {
 		ideas: res.data,
 		user: locals.user,	
@@ -38,7 +38,7 @@ export const actions = {
 			comment: data.get('comment'),
 			is_anonymous: isAnonymous
 		}
-		const res = await api.post(`comments`,form,locals.user.token );
+		const res = await api.post(`comments`,form,locals.user.Token );
 		if (res.error) {
 			return {error: res.error}
 		}else{
@@ -49,7 +49,7 @@ export const actions = {
 	async getComment({request, locals}) {
 		const data = await request.formData();
 		const form = await data.get('commentId');
-		const res = await api.get(`comments/${form}`,locals.user.token );
+		const res = await api.get(`comments/${form}`,locals.user.Token );
 		if (res.error) {
 			return {error: res.error}
 		}else{
@@ -72,7 +72,7 @@ export const actions = {
 			// @ts-ignore
 			form.is_anonymous = false
 		}
-		const res = await api.put(`comments/${form._id}`,form,locals.user.token );
+		const res = await api.put(`comments/${form._id}`,form,locals.user.Token );
 		if (res.error) {
 			return {error: res.error}
 		}else if(res.success){
@@ -83,7 +83,7 @@ export const actions = {
 	async deleteComment ({request, locals}) {
 		const data = await request.formData();
 		const form = await data.get('commentId');
-		const res = await api.del(`comments/${form}`,locals.user.token );
+		const res = await api.del(`comments/${form}`,locals.user.Token );
 		if (res.error) {
 			return {error: res.error}
 		}else{
@@ -96,7 +96,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		const res =  await api.post('up-vote',form,locals.user.token );
+		const res =  await api.post('up-vote',form,locals.user.Token );
 	},
 	async downVote({request, locals}) {
 		const data = await request.formData();
@@ -104,7 +104,7 @@ export const actions = {
 			username: locals.user.username,
 			idea_id: data.get('ideaId'),
 		}
-		const res = await api.post('down-vote',form,locals.user.token );
+		const res = await api.post('down-vote',form,locals.user.Token );
 
 	},
 	

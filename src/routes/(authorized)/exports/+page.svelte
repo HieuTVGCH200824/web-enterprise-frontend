@@ -12,27 +12,25 @@ export let form:any;
 
 
     let ideaName="";
-    let departmentName = "";
 
     function exportIdeaCSV(){
         window.open(`http://localhost:8080/export-ideas-to-csv?csvPath=file/${ideaName}.csv`)
     }
     
     function exportDepartmentCSV(event){
-        const formData = new FormData(event.target);
-        const exportName = formData.get('exportName');
-        const departmentId = formData.get('departmentId');
-        console.log(`http://localhost:8080/export-ideas-to-csv-department?csvPath=file/${exportName}.csv&department=${departmentId}`)
-        window.open(`http://localhost:8080/export-ideas-to-csv-department?csvPath=file/${exportName}.csv&department=${departmentId}`)
+            const formData = new FormData(event.target);
+            const departmentId = formData.get('departmentId');
+            window.open(`http://localhost:8080/export-ideas-to-csv-department?department=${departmentId}`)
+        
     }
 
     function exportByDate(event){
         const formData = new FormData(event.target);
-        const exportName = formData.get('exportName');
-        const startDate = formData.get('from');
+        const startDate =  formData.get('from');
         const endDate = formData.get('to');
-        console.log(`http://localhost:8080/export-ideas-to-csv-date?csvPath=file/${exportName}.csv&from=${startDate}&to=${endDate}`)
-        window.open(`http://localhost:8080/export-ideas-to-csv-date?csvPath=file/${exportName}.csv&from=${startDate}&to=${endDate}`)
+        const from =  new Date(startDate).toISOString()
+        const to = new Date(endDate).toISOString()
+        window.open(`http://localhost:8080/export-ideas-to-csv-date?from=${from}&to=${to}`)
     }
 
 </script>
@@ -48,9 +46,8 @@ export let form:any;
     <div class="flex flex-col items-center justify-center space-y-5">
         <h1 class="font-bold text-2xl">Export department to CSV</h1>
         <form on:submit|preventDefault={exportDepartmentCSV} class="flex flex-col items-center justify-center space-y-5">
-            <Input label="" type="text" value="" required={true} name="exportName" id="exportName" placeholder="Export Name"></Input>
             <Select title="Department" defaultValue="" name="departmentId" options={data.departments}></Select>
-            <ExportButton on:event={exportDepartmentCSV}><span>Export</span></ExportButton>
+            <ExportButton><span>Export</span></ExportButton>
         </form>
     </div>
 </div>
@@ -58,7 +55,6 @@ export let form:any;
     <div class="flex flex-col items-center justify-center space-y-5">
         <h1 class="font-bold text-2xl">Export to CSV by date</h1>
         <form on:submit|preventDefault={exportByDate} class="flex flex-col items-center justify-center space-y-5">
-            <Input label="" type="text" value="" required={true} name="exportName" id="exportName" placeholder="Export Name"></Input>
             <div>
                 <Input required={true} label="From" type="datetime-local" value="" id="first_closure" name="from" placeholder=""></Input>
             </div>
