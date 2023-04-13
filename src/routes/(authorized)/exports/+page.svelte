@@ -11,10 +11,9 @@ export let data:any;
 export let form:any;
 
 
-    let ideaName="";
 
     function exportIdeaCSV(){
-        window.open(`${base}/export-ideas-to-csv?csvPath=file/${ideaName}.csv`)
+        window.open(`${base}/export-ideas-to-csv`)
     }
     
     function exportDepartmentCSV(event){
@@ -37,8 +36,7 @@ export let form:any;
 <div class="flex flex-row items-center justify-around  max-md:flex-col max-md:space-y-16 max-md:mb-24">
 <div class="flex items-center justify-center">
     <div class="flex flex-col items-center justify-center space-y-5">
-        <h1 class="font-bold text-2xl">Export ideas to CSV</h1>
-            <Input label="" type="text" bind:value={ideaName} required={true} name="exportName" id="exportName" placeholder="Export Name"></Input>
+        <h1 class="font-bold text-2xl">Export all ideas to CSV</h1>
             <ExportButton on:event={exportIdeaCSV}><span>Export</span></ExportButton>
     </div>
 </div>
