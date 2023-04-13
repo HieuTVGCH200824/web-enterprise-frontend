@@ -119,7 +119,7 @@ function handleExport(document){
             </form>
         <CommentButton on:event={()=>{show=!show}} state={show}>{commentCount}</CommentButton>
     </div>
-    {#if show}
+    <div class="{show?"visible opacity-100 scale-100":"h-0 invisible opacity-0 scale-0"} ease-in-out duration-500">
     <div class="space-y-5 pl-10 ">
         {#each comments as comment}
         {#if comment.idea_id == idea._id }
@@ -180,11 +180,12 @@ function handleExport(document){
 
     </div>
     <div class="w-full flex items-center justify-center {commentCount>0?"flex":"hidden"}">
-        <div class="w-3/4 ">
+        <div class="w-3/4 pt-5">
             <ChevronButton on:event={()=>show=false}>Hide comments</ChevronButton>
         </div>
     </div>
-    {/if}
+    </div>
+
     <div class="h-3/4 px-10 pb-20 min-h-fit ">
         <div>
             <form action="?/addComment"  use:enhance method="POST" class="flex flex-col items-start justify-center">

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Usergroupbutton from "../Button/Usergroupbutton.svelte";
     import { createEventDispatcher } from "svelte";
-    let barState :boolean=true;
+    let barState :boolean=false;
     export let user : any ;
     const dispatch = createEventDispatcher();
     function handleEvent() {

@@ -2,7 +2,7 @@
 	import Sidebar from "../../components/Sidebar/Sidebar.svelte";
     import Userbar from "../../components/Userbar/Userbar.svelte";
     import Searchbar from "../../components/SearchBar/Searchbar.svelte";
-    let userBar : boolean =true;
+    let userBar : boolean =false;
 
     /** @type {import('./$types').PageData} */
 export let data:any;

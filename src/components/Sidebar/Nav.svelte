@@ -5,12 +5,11 @@
 </script>
 
 <div class="w-full">
-    <a href="/{path}" class="{barState?" justify-start":"justify-center"} max-md:justify-center p-4 flex rounded items-center hover:text-violet-400 sm:space-x-5 sm:h-10 hover:bg-black/50">
+    <a href="/{path}" class="{barState?" justify-start":"justify-center"}  duration-1000 ease-in-out max-md:justify-center p-4 flex rounded items-center hover:text-violet-400 sm:space-x-5 sm:h-10 hover:bg-black/50">
         <div>
-
             <slot/>
         </div>
-        <p class="{barState?" block" : " hidden"} max-md:hidden">
+        <p class="{barState?" visibile opacity-100" : "hidden invisible opacity-0"} max-md:invisible ">
             {content}
         </p>
     </a>
