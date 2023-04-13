@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-const base ='http://localhost:8080';
+export const base ='https://web-enterprise-golang-production.up.railway.app';
 
 
 async function send({ method, path, data, token }) {

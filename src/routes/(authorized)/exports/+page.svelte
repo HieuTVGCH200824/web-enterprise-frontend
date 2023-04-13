@@ -1,7 +1,7 @@
 <script lang="ts">
     import ExportButton from "../../../components/Button/ExportButton.svelte";
     import Input from "../../../components/Input.svelte";
-    import {enhance} from "$app/forms";
+    import {base} from'$lib/api';
 	import Select from "../../../components/Select.svelte";
 
     /** @type {import('./$types').PageData} */
@@ -14,13 +14,13 @@ export let form:any;
     let ideaName="";
 
     function exportIdeaCSV(){
-        window.open(`http://localhost:8080/export-ideas-to-csv?csvPath=file/${ideaName}.csv`)
+        window.open(`${base}/export-ideas-to-csv?csvPath=file/${ideaName}.csv`)
     }
     
     function exportDepartmentCSV(event){
             const formData = new FormData(event.target);
             const departmentId = formData.get('departmentId');
-            window.open(`http://localhost:8080/export-ideas-to-csv-department?department=${departmentId}`)
+            window.open(`${base}/export-ideas-to-csv-department?department=${departmentId}`)
         
     }
 
@@ -30,7 +30,7 @@ export let form:any;
         const endDate = formData.get('to');
         const from =  new Date(startDate).toISOString()
         const to = new Date(endDate).toISOString()
-        window.open(`http://localhost:8080/export-ideas-to-csv-date?from=${from}&to=${to}`)
+        window.open(`${base}/export-ideas-to-csv-date?from=${from}&to=${to}`)
     }
 
 </script>

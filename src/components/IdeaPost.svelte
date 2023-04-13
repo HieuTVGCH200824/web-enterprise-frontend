@@ -8,6 +8,7 @@ import EditButton from "./Button/EditButton.svelte";
 import DeleteButton from "./Button/DeleteButton.svelte";
 import ToggleButton from "./Button/ToggleButton.svelte";
 import ChevronButton from "./Button/ChevronButton.svelte";
+import {base} from '$lib/api';
 
 
 export let idea : any;
@@ -50,7 +51,9 @@ $: postVotes = votes?.find(
     );
 
 
-
+function handleExport(document){
+    window.open(`${base}/export-documents-to-zip?files=file/${document}`)
+}
 
 
 
@@ -98,9 +101,9 @@ $: postVotes = votes?.find(
             </a>
         </div>
         <h1>Attachment:
-            <a class="hover:text-violet-400" href="http://localhost:8080/export-documents-to-zip?files=file/{documents?.file_name}">
+            <button class="hover:text-violet-400" on:click={()=>{handleExport(documents?.file_name)}} >
                 {documents?.file_name}
-            </a>
+            </button>
         </h1>
     </div>
     <div class="w-full h-fit flex items-center space-x-3 bg-[#393D5D] drop-shadow-[#fff] shadow-white pb-2 pt-4  px-10 z-50">
