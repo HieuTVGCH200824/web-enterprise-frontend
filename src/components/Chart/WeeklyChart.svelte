@@ -38,7 +38,7 @@
 			datasets: [
 				{
 					label: 'Number of ideas',
-					backgroundColor: 'green',
+					backgroundColor: '#7DCEA0',
 					borderColor: 'rgb(255, 99, 132)',
 					data: dataset,
 				},

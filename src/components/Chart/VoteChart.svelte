@@ -43,13 +43,13 @@
 			datasets: [
 				{
 					label: 'Up Votes',
-					backgroundColor: 'green',
+					backgroundColor: ' #E6E6FA',
 					borderColor: 'rgb(255, 99, 132)',
 					data: upVotes,
 				},
                 {
 					label: 'Down Votes',
-					backgroundColor: 'purple',
+					backgroundColor: '#FFC0CB',
 					borderColor: 'rgb(255, 99, 132)',
 					data: downVotes,
 				}

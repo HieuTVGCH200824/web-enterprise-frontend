@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-    import {chartJS,votes,fetchVoteChart} from '$lib/action.js'
+    import {chartJS,department,fetchDepartmentChart} from '$lib/action.js'
 
 
 
@@ -11,49 +11,52 @@
 	
 
     //loop through ideas, get each up_vote value and put it into charValues array
-    let upVotes =[];
-    let downVotes =[]
-    let labels =[]
+    let dataset =[];
+    let labels =[];
+	let colors = []
     let inertvalId:any;
 
     //assign upvotes to array of $votes.up_vote
-   
-    $: if($votes) {
-        upVotes = $votes.map((vote:any) => vote.up_vote)
-        downVotes = $votes.map((vote:any) => vote.down_vote)
-        labels = $votes.map((vote:any) => vote.title)
-        console.log(upVotes)
-        data.data.datasets[0].data = upVotes
-        data.data.datasets[1].data = downVotes
+	function getColor(){
+		let r = Math.floor(Math.random() * 200);
+		let g = Math.floor(Math.random() * 200);
+		let b = Math.floor(Math.random() * 200);
+		let color = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+		return color
+	}
+	$: if(Object.keys($department).length > colors.length) {
+		colors.push(getColor())
+	}
+
+    $: if($department) {
+		//set dataset to value and label to keys for each attribute in the object
+        dataset = Object.values($department)
+		labels = Object.keys($department)
+		data.data.datasets[0].backgroundColor = colors
+        data.data.datasets[0].data = dataset
         data.data.labels = labels
     }
     
     onMount(async()=>{
-        inertvalId = fetchVoteChart(user.Token);
+        inertvalId = fetchDepartmentChart(user.Token);
     })
     onDestroy(()=>{
         clearInterval(inertvalId)
     })
 
     let data = {
-		type: 'bar',
+		type: 'pie',
 		data: {
 			//X axis data label
 			labels: labels,
 			//set default dataset as CPU
 			datasets: [
 				{
-					label: 'Up Votes',
-					backgroundColor: 'green',
+					label: 'Department',
+					backgroundColor: colors,
 					borderColor: 'rgb(255, 99, 132)',
-					data: upVotes,
+					data: dataset,
 				},
-                {
-					label: 'Down Votes',
-					backgroundColor: 'purple',
-					borderColor: 'rgb(255, 99, 132)',
-					data: downVotes,
-				}
 			]
 		},
 		options: {
@@ -66,7 +69,7 @@
 				},
 				title: {
 					display: true,
-					text: 'Most voted ideas'
+					text: 'Department ideas'
 				}
 			},
 		
