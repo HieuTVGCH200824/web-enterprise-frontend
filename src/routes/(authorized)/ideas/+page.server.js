@@ -4,9 +4,9 @@ import * as api from '$lib/api.js';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({locals}) {
     if (locals.user.role !== "Staff") throw redirect(302, `/`);
-    const res = await api.get('ideas-not-paging',locals.user.token )
-    const category = await api.get('categories',locals.user.token )
-    const event = await api.get('closures',locals.user.token )
+    const res = await api.get('ideas-not-paging',locals.user.Token )
+    const category = await api.get('categories',locals.user.Token )
+    const event = await api.get('closures',locals.user.Token )
     const body = {
         ideas: res.data,
         user: locals.user,
@@ -27,9 +27,9 @@ export const actions = {
         const form= {
             id: req.get('id'),
         }
-        const res = await api.get(`ideas/${form.id}`, locals.user.token);
+        const res = await api.get(`ideas/${form.id}`, locals.user.Token);
         const idea = res.data
-        const event = await api.get(`closures/${idea.event_id}`, locals.user.token);
+        const event = await api.get(`closures/${idea.event_id}`, locals.user.Token);
         if (res.error) {
             return {error: res.error}
         }
@@ -38,8 +38,8 @@ export const actions = {
     createIdea: async ({ request, locals }) => {
 		const data = await request.formData();
         const image = await data.get('image')
-        const attachment =  data.get('attachment')
-		const isAnonymous = data.get('isAnonymous') === "true" ? true : false
+        const attachment =  await data.get('attachment')
+		const isAnonymous =  await data.get('isAnonymous') === "true" ? true : false
 
         if(data.get('term') !="agree"){
             return {error: "You must agree to the terms and conditions"}
@@ -59,22 +59,27 @@ export const actions = {
             const imageLink = imageRes.link
             // @ts-ignore
             form.image = imageLink
-            const res = await api.post('ideas', form, locals.user.token);
+            const res = await api.post('ideas', form, locals.user.Token);
             const uploadForm = {
                 idea_id:  null,
                 created_by: locals.user._id,
             }
 
+            if (attachment?.name != "undefined"){
             uploadForm.idea_id = await res.data?._id
 
-            const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.token)
+            const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.Token)
 
-            // @ts-ignore
-            form.file_name = await resAttachtment._id
-
-            const postId = await res.data._id
+                if(resAttachtment){
+                // @ts-ignore
+                form.file_name = await resAttachtment._id
+                
+                const postId = await res.data._id
+                
+                const editPost = await api.put(`ideas/${postId}`,form, locals.user.Token);
+                }
+            }
             
-            const editPost = await api.put(`ideas/${postId}`,form, locals.user.token);
 
 
             
@@ -101,7 +106,7 @@ export const actions = {
             user_id: locals.user._id,
         }
         
-        const resIdea = await api.get(`ideas/${form._id}`, locals.user.token);
+        const resIdea = await api.get(`ideas/${form._id}`, locals.user.Token);
         if(image?.name == "undefined" ){
             const idea = resIdea.data
             // @ts-ignore
@@ -118,15 +123,19 @@ export const actions = {
             // @ts-ignore
             form.file_name = idea.file_name
         }else{
-            const deleteRes = await api.del(`documents/${resIdea.file_name}`, locals.user.token)
+            const deleteRes = await api.del(`documents/${resIdea.file_name}`, locals.user.Token)
             if(deleteRes.status == 1 ){
-                const fileRes = await api.uploadFile(attachment,form._id,locals.user._id, locals.user.token);
+                const fileRes = await api.uploadFile(attachment,form._id,locals.user._id, locals.user.Token);
                 // @ts-ignore
-                form.file_name = fileRes._id
+                if(fileRes?._id){
+                    form.file_name = fileRes._id
+                }else{
+                    form.file_name = null
+                }
             }
         }
         
-    const res = await api.put(`ideas/${form._id}`, form, locals.user.token);
+    const res = await api.put(`ideas/${form._id}`, form, locals.user.Token);
     if (res.error) {
         return {error: res.error}
     }else{
@@ -138,7 +147,7 @@ export const actions = {
         const form = {
             _id: data.get('id')
         }
-    const res = await api.del(`ideas/${form._id}`, locals.user.token);
+    const res = await api.del(`ideas/${form._id}`, locals.user.Token);
     if (res.error) {
         return {error: res.error}
     }else{
