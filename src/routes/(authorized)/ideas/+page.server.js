@@ -70,7 +70,7 @@ export const actions = {
 
             const resAttachtment = await api.uploadFile(attachment,uploadForm.idea_id,uploadForm.created_by, locals.user.Token)
 
-                if(resAttachtment){
+                if(resAttachtment && res){
                 // @ts-ignore
                 form.file_name = await resAttachtment._id
                 
