@@ -9,7 +9,7 @@ onMount(() => {
   }, 500);
 });
 </script>{#if showComponent}
-<div class=" w-screen h-screen top-0 left-0 z-50 opacity-90 absolute">
+<div class=" w-screen h-screen top-0 left-0 z-50 absolute">
 <div class="flex items-center justify-center w-full h-full animate-pulse">
     <xml version="1.0" encoding="utf-8">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
