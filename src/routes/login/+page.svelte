@@ -4,6 +4,9 @@
     import Input from '../../components/Input.svelte';
     import { enhance } from '$app/forms';
     import Errors from '$lib/Error.svelte';
+    import { navigating } from '$app/stores'
+    import Loader from '../../components/Loader.svelte';
+
 
 
 
@@ -16,6 +19,9 @@
 
     
 </script>
+{#if $navigating}
+<Loader></Loader>
+{/if}
 <div class="flex items-center justify-center h-full w-full fixed bg-background-indigo">
     <div class="flex justify-center lg:space-x-40 max-lg:h-full items-center w-full max-lg:flex-col ">
         <img class="animate-[bounce_1500ms_ease-in-out] h-[600px] max-lg:h-48" src="login.png" alt="">
@@ -25,10 +31,6 @@
                 <form method="POST" use:enhance class="flex flex-col space-y-8">
                     <Input name="email" label="" value="" type="text" id="username" placeholder="Username"></Input>
                     <Input name="password" label="" value="" type="password" id="password" placeholder="Password"></Input>
-                    <div class="flex flex-row items-center space-x-4">
-                        <Checkbox label="" value="" id="rememberPwd"/>
-                        <p class="text-white text-lg">Remember Password</p>
-                    </div>
                     <div class="self-center flex flex-col items-center space-y-2">
                         <div class="w-32">
                             <Button>Login</Button>
@@ -41,3 +43,4 @@
         </div>
     </div>
 </div>
+

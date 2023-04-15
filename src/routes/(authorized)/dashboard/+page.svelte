@@ -2,6 +2,8 @@
     import VoteChart from "../../../components/Chart/VoteChart.svelte";
     import WeeklyChart from "../../../components/Chart/WeeklyChart.svelte";
     import DepartmentChart from "../../../components/Chart/DepartmentChart.svelte"
+    import { navigating } from '$app/stores'
+    import Loader from '../../../components/Loader.svelte';
 
 
 
@@ -11,7 +13,9 @@ export let data:any;
 /** @type {import('./$types').ActionData} */
 export let form:any;
 </script>
-
+{#if $navigating}
+<Loader></Loader>
+{/if}
 <div class="flex flex-col justify-center items-center space-y-5 mb-10">
     <div class="flex flex-col md:flex-row space-y-5 justify-around items-center w-full">
         <div class="bg-white rounded-3xl p-8 lg:min-w-[30rem] min-h-[25rem] h-3/4">

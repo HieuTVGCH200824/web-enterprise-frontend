@@ -5,6 +5,8 @@
 	import SortFilter from "../../components/SortFilter.svelte";
 	import DepartmentFilter from "../../components/DepartmentFilter.svelte";
 	import CategoryFilter from "../../components/CategoryFilter.svelte";
+    import { navigating } from '$app/stores'
+    import Loader from '../../components/Loader.svelte';
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -68,6 +70,9 @@ $: if (categoryFilter._id !== null || departmentFilter._id !== null) {
 
 
 </script>
+{#if $navigating}
+<Loader></Loader>
+{/if}
 <div class="h-full w-full text-white"><div class="mx-10 space-y-10">
     {#if data.body.ideas}
     <div class="w-full pb-12 flex items-center justify-center">

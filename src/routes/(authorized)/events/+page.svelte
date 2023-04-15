@@ -8,6 +8,8 @@ import Pagination from "../../../components/Pagination.svelte";
 import Modal from '../../../components/Modal.svelte'
 import Input from "../../../components/Input.svelte";
 import SubmitButton from "../../../components/Button/SubmitButton.svelte";
+import { navigating } from '$app/stores'
+    import Loader from '../../../components/Loader.svelte';
 
 
 
@@ -55,6 +57,9 @@ $: if(events){
 
 </script>
 
+{#if $navigating}
+<Loader></Loader>
+{/if}
 {#if showModal}
 <Modal bind:showModal>
     <div class=" bg-[#393D5D] h-fit flex items-center flex-col pt-5 pb-10 w-full space-y-10">

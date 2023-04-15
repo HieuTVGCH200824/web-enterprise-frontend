@@ -9,6 +9,8 @@
     import EditButton from "../../../components/Button/EditButton.svelte";
 	import SubmitButton from "../../../components/Button/SubmitButton.svelte";
     import Pagination from "../../../components/Pagination.svelte";
+    import { navigating } from '$app/stores'
+    import Loader from '../../../components/Loader.svelte';
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -46,7 +48,9 @@ $: if(search){
 
 </script>
 
-{#if showModal}
+{#if $navigating}
+<Loader></Loader>
+{/if}{#if showModal}
 <Modal bind:showModal>
     <div class=" bg-[#393D5D] h-fit flex items-center flex-col pt-5 pb-10 w-full">
     <div>

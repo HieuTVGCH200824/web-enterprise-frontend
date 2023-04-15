@@ -11,6 +11,8 @@
   import Search from "../../../components/SearchBar/Search.svelte";
   import ChooseFile from "../../../components/ChooseFile.svelte";
   import Pagination from "../../../components/Pagination.svelte";
+  import Loader from "../../../components/Loader.svelte";
+  import {navigating} from '$app/stores';
 
 /** @type {import('./$types').PageData} */
 export let data:any;
@@ -73,6 +75,9 @@ const roles=[
 
 </script>
 
+{#if $navigating}
+<Loader></Loader>
+{/if}
 {#if !users}
   <h1>There are no registered users</h1>
 {:else if modalType}

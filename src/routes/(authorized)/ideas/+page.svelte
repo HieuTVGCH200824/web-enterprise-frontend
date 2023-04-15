@@ -14,6 +14,8 @@
 	import ChooseFile from '../../../components/ChooseFile.svelte';
 	import ToggleButton from '../../../components/Button/ToggleButton.svelte';
     import Pagination from '../../../components/Pagination.svelte';
+    import Loader from '../../../components/Loader.svelte';
+    import {navigating} from '$app/stores';
 
 
     /** @type {import('./$types').PageData} */
@@ -82,7 +84,9 @@ $: if(events){
 
 </script>
 
-
+{#if $navigating}
+<Loader></Loader>
+{/if}
 {#if showModal}
 <Modal bind:showModal>
     <div class=" bg-[#393D5D] h-fit flex items-center flex-col pt-5 pb-10 w-full">

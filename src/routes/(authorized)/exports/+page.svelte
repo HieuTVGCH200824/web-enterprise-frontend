@@ -3,6 +3,8 @@
     import Input from "../../../components/Input.svelte";
     import {base} from'$lib/api';
 	import Select from "../../../components/Select.svelte";
+    import { navigating } from '$app/stores'
+    import Loader from '../../../components/Loader.svelte';
 
     /** @type {import('./$types').PageData} */
 export let data:any;
@@ -33,6 +35,10 @@ export let form:any;
     }
 
 </script>
+    
+    {#if $navigating}
+        <Loader />
+    {/if}
 <div class="flex flex-row items-center justify-around  max-md:flex-col max-md:space-y-16 max-md:mb-24">
 <div class="flex items-center justify-center">
     <div class="flex flex-col items-center justify-center space-y-5">
