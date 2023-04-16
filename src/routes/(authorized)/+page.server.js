@@ -11,7 +11,7 @@ export async function load({ locals,url }) {
 	const departments = await api.get('departments', locals.user.Token);
 	const allUser = await api.get('users', locals.user.Token);
 	const body = {
-		ideas: (sortParams == 'sort'? res.data: res.data.reverse()),
+		ideas: (sortParams == 'ideas-not-paging'? res.data.reverse():res.data),
 		user: locals.user,	
 		comments: comments.data,
 		votes: votes.data,
