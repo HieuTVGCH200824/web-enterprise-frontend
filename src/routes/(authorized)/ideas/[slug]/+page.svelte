@@ -1,13 +1,7 @@
 <script lang="ts">
-	import CommentButton from '../../../../components/Button/CommentButton.svelte';
-	import DislikeButton from '../../../../components/Button/DislikeButton.svelte';
-	import LikeButton from '../../../../components/Button/LikeButton.svelte';
-	import Textarea from '../../../../components/Textarea.svelte';
-	import LoginButton from '../../../../components/Button/LoginButton.svelte';
-
-	import { enhance } from '$app/forms';
-	import DeleteButton from '../../../../components/Button/DeleteButton.svelte';
 	import IdeaPost from '../../../../components/IdeaPost.svelte';
+	import Loader from '../../../../components/Loader.svelte';
+    import {navigating} from '$app/stores';
 
 	/** @type {import('./$types').PageData} */
 	export let data: any;
@@ -30,7 +24,9 @@
 
 	
 </script>
-
+{#if $navigating}
+<Loader></Loader>
+{/if}
 <div class="h-full">
 	<IdeaPost categories={data.categories} departments={data.departments} files={data.documents} allUser={data.allUser} votes={data.votes} user={data.user} idea={data.idea} getComment={getComment} comments={data.comments} />
 </div>

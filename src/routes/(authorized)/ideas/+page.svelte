@@ -63,7 +63,7 @@ $: if (search) {
         );
     });
     } else {
-        ideas = data.body.ideas.filter((obj) => {
+        ideas = data.body.ideas?.filter((obj) => {
             return obj.user_id == data.body.user._id
         });
     }
@@ -151,7 +151,7 @@ $: if(events){
     </div>
     <CreateButton on:event={()=>{showModal=true}}>Create Idea</CreateButton>
     <div class="md:w-[60%] w-full">
-        {#if ideas.length > 0}
+        {#if ideas}
         <div class="w-full grid grid-cols-2 auto-rows-max gap-x-14 gap-y-10 justify-center">
             {#each paginatedIdeas as idea}
             <div class="col-span-1 row-span-1 flex items-center justify-center flex-col">
