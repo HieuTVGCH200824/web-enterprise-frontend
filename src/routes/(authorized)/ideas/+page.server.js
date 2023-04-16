@@ -5,10 +5,13 @@ import * as api from '$lib/api.js';
 export async function load({locals}) {
     if (locals.user.role !== "Staff") throw redirect(302, `/`);
     const res = await api.get('ideas-not-paging',locals.user.Token )
+    const ideas = res.data.filter((obj) => {
+        return obj.user_id == locals.user._id
+    });
     const category = await api.get('categories',locals.user.Token )
     const event = await api.get('closures',locals.user.Token )
     const body = {
-        ideas: res.data,
+        ideas: ideas,
         user: locals.user,
         category: category.data,
         event: event.data.map((event)=>{return {_id: event._id, name: event.event_name,first_closure: event.first_closure,final_closure: event.final_closure}})

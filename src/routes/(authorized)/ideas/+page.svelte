@@ -53,9 +53,7 @@ let paginatedIdeas=ideas;
 
 
 $: if (search) {
-    ideas = data.body.ideas.filter((obj) => {
-            return obj.user_id == data.body.user._id
-        });
+    
     ideas = ideas.filter((obj) => {
         return (
         obj.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,9 +61,7 @@ $: if (search) {
         );
     });
     } else {
-        ideas = data.body.ideas?.filter((obj) => {
-            return obj.user_id == data.body.user._id
-        });
+        ideas = data.body.ideas
     }
 let anonymousIdea : boolean = false;
 function handleToggle(event){
