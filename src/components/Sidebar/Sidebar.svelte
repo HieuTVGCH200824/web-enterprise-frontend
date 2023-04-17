@@ -7,6 +7,8 @@ import SidebarButton from "../Button/SidebarButton.svelte";
 
 
 import Nav from "./Nav.svelte";
+
+
 </script>
 <div class="{state?"md:w-60 max-md:w-full absolute max-md:bg-opacity-100 z-50":"min-w-[5rem] w-20 z-50 fixed max-md:w-full"} max-md:bottom-0 max-md:h-20 max-md:bg-card-indigo text-white font-sans h-screen md:sticky ease-in-out duration-700 bg-card-indigo bg-opacity-50 md:rounded-tl-xl">
     <div class="{state?"space-x-8":""} max-md:hidden border-b-2 border-white/10 py-3 flex items-center justify-center sm:rounded-tl-xl">
@@ -23,8 +25,7 @@ import Nav from "./Nav.svelte";
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-              </svg>
-              
+            </svg>
         </Nav>
         {/if}
         {#if user.role === "Admin"}

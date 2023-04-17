@@ -118,7 +118,7 @@ $: if(events){
                     <h1>Attachment: </h1>
                     <ChooseFile
                     type="file"
-                    accept="*/*"
+                    accept=".doc, .docx, .xlsx, .jpg, .jpeg, .png, .pdf"
                     name="attachment"
                     />
                 </div>
