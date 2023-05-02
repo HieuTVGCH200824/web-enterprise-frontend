@@ -49,6 +49,11 @@ $: if(search){
 }
 let paginatedUsers = users;
 
+$: if(form?.success){
+    alert("Action performed successfully");
+}
+
+
 $: if(form?.error){
         alert(form.error)
     }

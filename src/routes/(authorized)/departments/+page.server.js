@@ -21,8 +21,8 @@ export const actions = {
             name: data.get('name')
         }
         const body = await api.post(`departments`,form,locals.user.Token );
-        if (body.error) {
-            return {error: body.error}
+        if (body.status == 0) {
+            return {error: body.message}
         }else{
             return{success: true}
         }
@@ -43,8 +43,8 @@ export const actions = {
             name: data.get('name')
         }
         const res = await api.put(`departments/${form._id}`,form,locals.user.Token );
-        if (res.error) {
-            return {error: res.error}
+        if (body.status == 0) {
+            return {error: body.message}
         }else{
             return{success: true}
         }
@@ -53,8 +53,8 @@ export const actions = {
         const data = await request.formData();
         const form = data.get('id')
         const res = await api.del(`departments/${form}`,locals.user.Token );
-        if (res.error) {
-            return {error: res.error}
+        if (body.status == 0) {
+            return {error: body.message}
         }else{
             return{success: true}
         }

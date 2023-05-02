@@ -20,8 +20,8 @@ export const actions = {
             name: data.get('name')
         }
         const body = await api.post(`categories`,form,locals.user.Token );
-        if (body.error) {
-            return {error: body.error}
+        if (body.status == 0) {
+            return {error: body.message}
         }else{
             return{success: true}
         }
@@ -42,8 +42,8 @@ export const actions = {
             name: data.get('name')
         }
         const res = await api.put(`categories/${form._id}`,form,locals.user.Token );
-        if (res.error) {
-            return {error: res.error}
+        if (res.status == 0) {
+            return {error: res.message}
         }else{
             return{success: true}
         }
@@ -52,8 +52,8 @@ export const actions = {
         const data = await request.formData();
         const form = data.get('id')
         const res = await api.del(`categories/${form}`,locals.user.Token );
-        if (res.error) {
-            return {error: res.error}
+        if (res.status == 0) {
+            return {error: res.message}
         }else{
             return{success: true}
         }

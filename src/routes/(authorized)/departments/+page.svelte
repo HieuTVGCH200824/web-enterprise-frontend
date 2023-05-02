@@ -33,6 +33,7 @@ $: if(form?.success){
 }
 $: if(form?.error){
         alert(form.error)
+        form = null;
     }
 
 let departments  = data.departments;

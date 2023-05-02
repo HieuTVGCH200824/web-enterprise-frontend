@@ -60,7 +60,6 @@ export const actions = {
         
      
         const body = await api.put(`users/${data.get('id')}`,form,locals.user.Token);
-        
         if (body.error) {
             return {error: body.error}
         }else{
